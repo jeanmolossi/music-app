@@ -1,0 +1,54 @@
+{
+  "cover": "https://cdn.pixabay.com/photo/2016/05/19/16/34/rapper-1403313_960_720.jpg",
+
+  "popular": [
+    {
+      "cover": "https://cdn.pixabay.com/photo/2016/05/19/16/34/rapper-1403313_960_720.jpg",
+      "title": "Rap God",
+      "artist": "Eminem"
+    },
+    {
+      "cover": "https://cdn.pixabay.com/photo/2016/05/19/16/34/rapper-1403313_960_720.jpg",
+      "title": "Entrevista",
+      "artist": "Vicente"
+    },
+    {
+      "cover": "https://cdn.pixabay.com/photo/2016/05/19/16/34/rapper-1403313_960_720.jpg",
+      "title": "Rap God",
+      "artist": "Eminem"
+    },
+    {
+      "cover": "https://cdn.pixabay.com/photo/2016/05/19/16/34/rapper-1403313_960_720.jpg",
+      "title": "Entrevista",
+      "artist": "Vicente"
+    },
+    {
+      "cover": "https://cdn.pixabay.com/photo/2016/05/19/16/34/rapper-1403313_960_720.jpg",
+      "title": "Rap God",
+      "artist": "Eminem"
+    },
+    {
+      "cover": "https://cdn.pixabay.com/photo/2016/05/19/16/34/rapper-1403313_960_720.jpg",
+      "title": "Entrevista",
+      "artist": "Vicente"
+    }
+  ],
+
+  "albums": [
+    {
+      "cover": "https://cdn.pixabay.com/photo/2016/05/19/16/34/rapper-1403313_960_720.jpg",
+      "title": "Album remix",
+      "year": 2021
+    },
+    {
+      "cover": "https://cdn.pixabay.com/photo/2016/05/19/16/34/rapper-1403313_960_720.jpg",
+      "title": "Remixed album",
+      "year": 2021
+    },
+    {
+      "cover": "https://cdn.pixabay.com/photo/2016/05/19/16/34/rapper-1403313_960_720.jpg",
+      "title": "MC Poze",
+      "year": 2021
+    }
+  ]
+}
