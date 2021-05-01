@@ -1,4 +1,5 @@
 import { Entypo, Feather, FontAwesome5 } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
 import React, { Component, useEffect, useState } from "react";
 import { Image, Modal, Pressable, View } from "react-native";
 import { PanGestureHandler } from "react-native-gesture-handler";
@@ -25,7 +26,12 @@ export const Player = (props: PlayerProps) => {
   return (
     <Animated.View style={animatedStyles}>
       <View style={styles.container}>
-        <View style={styles.addorn} />
+        <LinearGradient
+          colors={[Theme.secondColor, Theme.secondColor_100]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 0, y: 1 }}
+          style={styles.addorn}
+        />
         <PanGestureHandler onGestureEvent={onGestureEvent}>
           <Animated.View style={styles.header}>
             <Pressable onPress={onClose}>
