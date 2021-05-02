@@ -1,11 +1,11 @@
 import React from "react";
-import { Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import {
   createStackNavigator,
   StackNavigationOptions,
 } from "@react-navigation/stack";
-import { HomePageFactory } from "../factory/pages";
+import { HomePageFactory } from "@/main/factory/pages";
+import { PlayerControlsProvider } from "@/presentation/components";
 
 interface MainRoutesProps {}
 
@@ -17,10 +17,12 @@ export const MainRoutes = ({}: MainRoutesProps) => {
   };
 
   return (
-    <NavigationContainer>
-      <Navigator {...{ screenOptions }}>
-        <Screen name="home" component={HomePageFactory} />
-      </Navigator>
-    </NavigationContainer>
+    <PlayerControlsProvider>
+      <NavigationContainer>
+        <Navigator {...{ screenOptions }}>
+          <Screen name="home" component={HomePageFactory} />
+        </Navigator>
+      </NavigationContainer>
+    </PlayerControlsProvider>
   );
 };
