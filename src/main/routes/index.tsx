@@ -4,7 +4,7 @@ import {
   createStackNavigator,
   StackNavigationOptions,
 } from "@react-navigation/stack";
-import { HomePageFactory } from "@/main/factory/pages";
+import { HomePageFactory } from "@/main/factories/pages";
 import { PlayerControlsProvider } from "@/presentation/components";
 
 interface MainRoutesProps {}
