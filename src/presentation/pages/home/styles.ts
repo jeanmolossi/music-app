@@ -120,7 +120,7 @@ export default StyleSheet.create({
   },
 
   albums_flat_list: {
-    height: 260,
+    height: 270,
   },
 
   albums_flat_list_container: {},
