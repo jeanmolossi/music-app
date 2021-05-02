@@ -1,3 +1,3 @@
 export interface GetStorage {
-  get<R>(key: string): Promise<R>;
+  get<R>(key: string): Promise<R | null>;
 }
