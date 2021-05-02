@@ -106,6 +106,11 @@ export const PlayerControlsProvider = ({
     playbackObject.setPositionAsync(value);
   }, []);
 
+  const togglePlayback = useCallback(() => {
+    if (playbackState === PlayerState.PLAYING) pauseMusic();
+    else playMusic();
+  }, [playbackState]);
+
   useEffect(() => {
     timerInMinutes();
   }, [timerInMinutes]);
@@ -156,6 +161,7 @@ export const PlayerControlsProvider = ({
         timers,
         onSeekComplete,
         currentTrackMetadata,
+        togglePlayback,
       }}
     >
       {children}

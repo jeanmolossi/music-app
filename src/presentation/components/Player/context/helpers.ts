@@ -12,6 +12,7 @@ export interface PlayerControlsContext {
   playMusic: () => void;
   pauseMusic: () => void;
   onSeekComplete: (value: number) => void;
+  togglePlayback: () => void;
   playbackState: PlayerState;
   progressState: number;
   totalDuration: number;

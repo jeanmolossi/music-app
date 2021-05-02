@@ -1,12 +1,16 @@
-import { Feather, FontAwesome5 } from "@expo/vector-icons";
 import React from "react";
+import { Feather, FontAwesome5 } from "@expo/vector-icons";
 import { Pressable, View } from "react-native";
-import { Theme } from "../../../styles";
+import { Theme } from "@/presentation/styles";
+import { PlayerState } from "@/presentation/components";
+import { usePlayerContext } from "@/presentation/components";
 import styles from "../styles";
 
 interface ControlsProps {}
 
 export const Controls = ({}: ControlsProps) => {
+  const { playbackState, togglePlayback } = usePlayerContext();
+
   return (
     <View style={styles.player_controls}>
       <Pressable>
@@ -17,9 +21,9 @@ export const Controls = ({}: ControlsProps) => {
         <Feather name="skip-back" color="white" size={22} />
       </Pressable>
 
-      <Pressable style={styles.main_button}>
+      <Pressable onPress={togglePlayback} style={styles.main_button}>
         <FontAwesome5
-          name="pause"
+          name={playbackState === PlayerState.PLAYING ? "pause" : "play"}
           color={Theme.backgroundMainColor}
           size={24}
         />
