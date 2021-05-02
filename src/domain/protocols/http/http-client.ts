@@ -7,10 +7,11 @@ export interface HttpClient<T = unknown> {
 export namespace HttpClient {
   export type Method = "GET" | "POST" | "DELETE" | "PUT";
 
-  export interface Params<BodyType> {
+  export interface Params<BodyType, HeadersType = any> {
     method: Method;
     url: string;
     body: BodyType;
+    headers?: HeadersType;
   }
 
   export type HttpResponse<ResponseModel> = ResponseModel;
