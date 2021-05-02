@@ -1,6 +1,5 @@
 import React from "react";
 import { Entypo, Feather } from "@expo/vector-icons";
-import Slider from "@react-native-community/slider";
 import { LinearGradient } from "expo-linear-gradient";
 import { Alert, Image, Pressable, View } from "react-native";
 import { PanGestureHandler, ScrollView } from "react-native-gesture-handler";
