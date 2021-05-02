@@ -11,3 +11,5 @@ web-build/
 
 # macOS
 .DS_Store
+
+src/domain/config/credentials/**/*.credentials.ts
