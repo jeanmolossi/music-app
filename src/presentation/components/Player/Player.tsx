@@ -11,6 +11,7 @@ import { usePlayerContext } from "./context/usePlayerControls";
 import { Controls } from "./controls";
 import { usePlayerHelpers } from "./helpers";
 import styles from "./styles";
+import { Progress } from "./progress";
 
 export interface PlayerProps {
   visibility: boolean;
@@ -21,13 +22,7 @@ export interface PlayerProps {
 export const Player = (props: PlayerProps) => {
   const { onClose } = props;
   const { onGestureEvent, animatedStyles } = usePlayerHelpers(props);
-  const {
-    progressState,
-    totalDuration,
-    timers,
-    onSeekComplete,
-    currentTrackMetadata,
-  } = usePlayerContext();
+  const { currentTrackMetadata } = usePlayerContext();
 
   return (
     <Animated.View style={animatedStyles}>
@@ -42,31 +37,37 @@ export const Player = (props: PlayerProps) => {
           style={styles.addorn}
         />
         <PanGestureHandler onGestureEvent={onGestureEvent}>
-          <Animated.View style={styles.header}>
-            <Pressable onPress={onClose}>
-              <Feather
-                name="chevron-down"
-                color={Theme.backgroundMainColor}
-                size={24}
+          <Animated.View>
+            <View style={styles.header}>
+              <Pressable onPress={onClose}>
+                <Feather
+                  name="chevron-down"
+                  color={Theme.backgroundMainColor}
+                  size={24}
+                />
+              </Pressable>
+
+              <Text style={{ color: Theme.backgroundMainColor }}>
+                Tocando agora
+              </Text>
+
+              <Pressable>
+                <Feather
+                  name="list"
+                  color={Theme.contrastTextColor}
+                  size={24}
+                />
+              </Pressable>
+            </View>
+
+            <View style={styles.cover}>
+              <Image
+                source={{ uri: currentTrackMetadata.cover }}
+                style={styles.cover_image}
               />
-            </Pressable>
-
-            <Text style={{ color: Theme.backgroundMainColor }}>
-              Tocando agora
-            </Text>
-
-            <Pressable>
-              <Feather name="list" color={Theme.contrastTextColor} size={24} />
-            </Pressable>
+            </View>
           </Animated.View>
         </PanGestureHandler>
-
-        <View style={styles.cover}>
-          <Image
-            source={{ uri: currentTrackMetadata.cover }}
-            style={styles.cover_image}
-          />
-        </View>
 
         <View style={styles.player_infos}>
           <View style={styles.infos_header}>
@@ -84,24 +85,7 @@ export const Player = (props: PlayerProps) => {
             </Pressable>
           </View>
 
-          <View style={styles.progress_bar}>
-            <View style={styles.progress_bar_bullet}>
-              <Slider
-                style={[styles.bar]}
-                minimumValue={0}
-                maximumValue={totalDuration}
-                thumbTintColor={Theme.secondColor}
-                maximumTrackTintColor={Theme.backgroundDarkColor}
-                minimumTrackTintColor={Theme.secondColor_100}
-                value={progressState}
-                onSlidingComplete={onSeekComplete}
-              />
-            </View>
-            <View style={styles.timers}>
-              <Text>{timers.current}</Text>
-              <Text>{timers.total}</Text>
-            </View>
-          </View>
+          <Progress />
 
           <Controls />
         </View>
