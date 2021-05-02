@@ -1,16 +1,13 @@
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
 import { Dimensions } from "react-native";
 import {
-  runOnJS,
-  runOnUI,
   useAnimatedGestureHandler,
   useAnimatedStyle,
-  useDerivedValue,
   useSharedValue,
   withSpring,
 } from "react-native-reanimated";
 import { clamp, snapPoint } from "react-native-redash";
-import { PlayerProps } from ".";
+import { PlayerProps } from "./";
 
 type AnimationContext = {
   startY: number;
