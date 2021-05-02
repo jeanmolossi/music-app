@@ -1,7 +1,8 @@
 import { Dimensions, StyleSheet } from "react-native";
-import { Theme } from "../../styles";
+import { Theme } from "@/presentation/styles";
 
-const { width: totalWitdth, height } = Dimensions.get("screen");
+const { width: totalWitdth } = Dimensions.get("screen");
+const { height: windowHeight } = Dimensions.get("window");
 
 const width = totalWitdth - 48;
 
@@ -10,12 +11,15 @@ const addornSize = width * 0.95;
 export default StyleSheet.create({
   container: {
     backgroundColor: Theme.backgroundMainColor,
-    flex: 1,
     paddingVertical: 32,
-    paddingHorizontal: 16,
     paddingTop: 0,
     position: "relative",
-    height,
+    height: windowHeight,
+  },
+
+  contentContainer: {
+    paddingHorizontal: 16,
+    paddingBottom: 40,
   },
 
   addorn: {
@@ -68,15 +72,13 @@ export default StyleSheet.create({
   },
 
   progress_bar_bullet: {
-    height: 5,
     backgroundColor: Theme.backgroundDarkColor,
     flexDirection: "row",
   },
 
   bar: {
-    width: "30%",
-    height: 5,
-    backgroundColor: Theme.secondColor,
+    width: "100%",
+    backgroundColor: Theme.backgroundMainColor,
   },
 
   bullet: {
