@@ -10,7 +10,7 @@ export namespace HttpClient {
   export interface Params<BodyType, HeadersType = any> {
     method: Method;
     url: string;
-    body: BodyType;
+    body?: BodyType;
     headers?: HeadersType;
   }
 
