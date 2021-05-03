@@ -1,19 +1,18 @@
 import axios from "axios";
 import { HttpClient } from "@/data/protocols/http/http-client";
 
-export class AxiosHttpClient<T> implements HttpClient<T> {
-  constructor(private readonly url: string) {}
-
+export class AxiosHttpClient<T = unknown> implements HttpClient<T> {
   async request<BodyType extends URLSearchParams>({
     method,
     body,
+    url,
   }: HttpClient.Params<BodyType>): Promise<HttpClient.HttpResponse<T>> {
     let axiosResponse: T;
 
     try {
       const httpResponse = await axios.request<T>({
         method,
-        url: this.url,
+        url,
         data: new URLSearchParams(body).toString(),
       });
 
