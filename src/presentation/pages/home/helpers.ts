@@ -1,19 +1,13 @@
-import { useCallback } from "react";
 import {
-  GestureEventPayload,
-  PanGestureHandlerEventPayload,
-} from "react-native-gesture-handler";
-import Animated, {
   useAnimatedGestureHandler,
   useSharedValue,
   withSpring,
-  runOnJS,
-  runOnUI,
   useAnimatedStyle,
   interpolate,
   Extrapolate,
 } from "react-native-reanimated";
 import { clamp, snapPoint } from "react-native-redash";
+import { AnimationE, AnimationContext, HomeProps } from "./types";
 
 const START_POSITION = 0;
 const END_POSITION = -220;
@@ -23,13 +17,7 @@ const SPRING_CONFIG = {
   damping: 18,
 };
 
-type AnimationE = Readonly<GestureEventPayload & PanGestureHandlerEventPayload>;
-
-export type AnimationContext = {
-  startY: number;
-};
-
-export function useHomeHelpers() {
+export function useHomeHelpers({}: HomeProps) {
   const translationY = useSharedValue(0);
   const isUp = useSharedValue(false);
 

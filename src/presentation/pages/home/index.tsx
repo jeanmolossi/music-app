@@ -17,16 +17,15 @@ import { Theme } from "@/presentation/styles";
 import { PopularList, AlbumsList, SocialsInfo } from "./components";
 import { useHomeHelpers } from "./helpers";
 import styles from "./styles";
+import { HomeProps } from "./types";
 
-interface HomeProps {}
-
-export const Home = ({}: HomeProps) => {
+export const Home = (props: HomeProps) => {
   const {
     animatedStyle,
     textAnimation,
     textBoxAnimation,
     onGestureEvent,
-  } = useHomeHelpers();
+  } = useHomeHelpers(props);
 
   const { onClose, visibility, onOpen } = usePlayer();
   const { playbackState, currentTrackMetadata } = usePlayerContext();
