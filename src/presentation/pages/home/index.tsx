@@ -28,7 +28,7 @@ export const Home = (props: HomeProps) => {
     onGestureEvent,
   } = useHomeAnimations();
 
-  const { onNavigationStateChange, code } = useHomeHelpers(props);
+  const { onNavigationStateChange, code, userInfo } = useHomeHelpers(props);
 
   const { onClose, visibility, onOpen } = usePlayer();
   const { playbackState, currentTrackMetadata } = usePlayerContext();
@@ -83,7 +83,13 @@ export const Home = (props: HomeProps) => {
             </LinearGradient>
           </Pressable>
 
-          <SocialsInfo />
+          <SocialsInfo
+            {...{
+              followers: userInfo?.followers.total,
+              country: userInfo?.country,
+              name: userInfo?.display_name,
+            }}
+          />
 
           <View style={styles.popular_content}>
             <Text variant="suave">Popular</Text>
