@@ -10,6 +10,7 @@ import {
   usePlayer,
   usePlayerContext,
   PlayerState,
+  AuthorizeSpotifyModal,
 } from "@/presentation/components";
 import db from "@/data/mock/fake_db.json";
 import { Theme } from "@/presentation/styles";
@@ -33,6 +34,9 @@ export const Home = ({}: HomeProps) => {
   return (
     <View style={styles.container}>
       <Player {...{ onClose, visibility, onOpen }} />
+
+      <AuthorizeSpotifyModal />
+
       <ImageBackground
         source={{ uri: currentTrackMetadata.cover }}
         style={styles.imageCover}
