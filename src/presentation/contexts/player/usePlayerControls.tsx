@@ -28,7 +28,7 @@ export const PlayerControlsProvider = ({
     currentTrackMetadata,
     setCurrentTrackMetadata,
   ] = useState<GetCurrentlyPlayingTrack.Model>();
-  const [nextCheck, setNextCheck] = useState(0);
+  const [nextCheck, setNextCheck] = useState(-1);
   const [reload, setReload] = useState(true);
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const [playbackState, setPlaybackState] = useState(PlayerState.LOADING);
@@ -147,7 +147,7 @@ export const PlayerControlsProvider = ({
 
   useEffect(() => {
     let CheckInterval: NodeJS.Timeout;
-    if (nextCheck > 0)
+    if (nextCheck >= 0)
       CheckInterval = setTimeout(() => {
         setReload(true);
       }, nextCheck);
@@ -155,7 +155,7 @@ export const PlayerControlsProvider = ({
     return () => {
       clearTimeout(CheckInterval);
     };
-  }, []);
+  }, [nextCheck]);
 
   useEffect(() => {
     if (reload) {
@@ -163,8 +163,13 @@ export const PlayerControlsProvider = ({
       remoteGetCurrentlyPlaying.get().then((response) => {
         setCurrentTrackMetadata(response);
 
-        if (response.is_playing)
-          setNextCheck(Date.now() + (response.item?.duration_ms || 0));
+        if (response.is_playing) {
+          const nextCheckCalc =
+            (response.item?.duration_ms || 1) - response.progress_ms;
+
+          console.log(nextCheckCalc);
+          setNextCheck(nextCheckCalc);
+        }
 
         setReload(false);
       });
