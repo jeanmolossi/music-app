@@ -5,6 +5,7 @@ import {
 } from "react-native-gesture-handler";
 
 export interface HomeProps {
+  setSpotifyAuthorizationCode: (auth_code: string) => Promise<void>;
   remoteLoadCurrentUserInfo: LoadUserInfo;
 }
 
