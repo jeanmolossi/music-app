@@ -21,7 +21,11 @@ export const AuthorizeSpotifyModal = ({
           }}
           onNavigationStateChange={(event) => {
             const urlResult = event.url.replace(/.*\/?\?code=/gm, "");
-            if (onNavigationStateChange && !!urlResult) {
+            const check_if_no_code = event.url.match(
+              /https?:\/\/(accounts)?\.(spotify)?\.com/gm
+            );
+
+            if (onNavigationStateChange && !!urlResult && !check_if_no_code) {
               onNavigationStateChange(urlResult);
             }
           }}
