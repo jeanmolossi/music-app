@@ -11,7 +11,7 @@ export interface CurrentlyPlayingTrackUser {
   progress_ms: number;
   is_playing: boolean;
   currently_playing_type: string;
-  item: {
+  item?: {
     album: {
       album_type: string;
       external_urls: {
