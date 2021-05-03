@@ -4,14 +4,12 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export class AsyncStorageAdapter implements GetStorage, SetStorage {
   private key_preffix = "@AwesomeMusic";
 
-  async get<R>(key: string): Promise<R> {
+  async get<R>(key: string): Promise<R | null> {
     const value = await AsyncStorage.getItem(`${this.key_preffix}/${key}`);
 
-    if (!value) {
-      throw new Error(`${key}: is empty`);
-    }
+    if (!value) return null;
 
-    return JSON.parse(value);
+    return JSON.parse(value || "");
   }
 
   async set<ValueType>(key: string, value: ValueType | null): Promise<void> {
