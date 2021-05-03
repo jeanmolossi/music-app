@@ -3,7 +3,7 @@ import spotifyCredentials from "@/domain/config/credentials/spotify/spotify.cred
 import { HttpClient } from "@/data/protocols/http/http-client";
 import { GetStorage, SetStorage } from "@/data/protocols/cache";
 import { makeApiUrl } from "@/main/factories/http/api-url-factory";
-import { AuthorizedSpotifyCredentials } from "@/domain/models/spotify";
+import { Spotify } from "@/domain/models/spotify";
 
 export class SpotifyAuthorizeHttpClientDecorator<T = unknown>
   implements HttpClient<T> {
@@ -59,7 +59,7 @@ export class SpotifyAuthorizeHttpClientDecorator<T = unknown>
     }
   }
 
-  private async getValidToken(): Promise<AuthorizedSpotifyCredentials> {
+  private async getValidToken(): Promise<Spotify.AuthCredentials> {
     const code = await this.storageAdapter.get<string>("authorization_code");
 
     if (!code) throw new Error("Code is empty");
@@ -80,7 +80,7 @@ export class SpotifyAuthorizeHttpClientDecorator<T = unknown>
       },
     })) as unknown;
 
-    return auth_data as AuthorizedSpotifyCredentials;
+    return auth_data as Spotify.AuthCredentials;
   }
 
   private encode_credentials(): string {
