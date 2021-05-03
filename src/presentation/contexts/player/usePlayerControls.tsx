@@ -10,9 +10,9 @@ import {
   PlayerControlsContext,
   PlayerControlsProviderProps,
   PlayerState,
-  PlayerMetadatas,
 } from "./helpers";
 import playlist from "@/data/mock/playlist";
+import { GetCurrentlyPlayingTrack } from "@/domain/usecases";
 
 const PlayerContext = createContext({} as PlayerControlsContext);
 
@@ -22,11 +22,14 @@ const playbackObject = new Audio.Sound();
 
 export const PlayerControlsProvider = ({
   children,
+  remoteGetCurrentlyPlaying,
 }: PlayerControlsProviderProps) => {
   const [
     currentTrackMetadata,
     setCurrentTrackMetadata,
-  ] = useState<PlayerMetadatas>(playlist[0]);
+  ] = useState<GetCurrentlyPlayingTrack.Model>();
+  const [nextCheck, setNextCheck] = useState(0);
+  const [reload, setReload] = useState(true);
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const [playbackState, setPlaybackState] = useState(PlayerState.LOADING);
   const [progressState, setProgressState] = useState(0);
@@ -116,8 +119,6 @@ export const PlayerControlsProvider = ({
   }, [timerInMinutes]);
 
   useEffect(() => {
-    setCurrentTrackMetadata(playlist[currentTrackIndex]);
-
     setPlaybackState(PlayerState.LOADING);
 
     playbackObject
@@ -143,6 +144,32 @@ export const PlayerControlsProvider = ({
         }
       });
   }, [currentTrackIndex, playlist]);
+
+  useEffect(() => {
+    let CheckInterval: NodeJS.Timeout;
+    if (nextCheck > 0)
+      CheckInterval = setTimeout(() => {
+        setReload(true);
+      }, nextCheck);
+
+    return () => {
+      clearTimeout(CheckInterval);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (reload) {
+      console.log("RELOAD");
+      remoteGetCurrentlyPlaying.get().then((response) => {
+        setCurrentTrackMetadata(response);
+
+        if (response.is_playing)
+          setNextCheck(Date.now() + (response.item?.duration_ms || 0));
+
+        setReload(false);
+      });
+    }
+  }, [reload]);
 
   return (
     <PlayerContext.Provider

@@ -1,3 +1,4 @@
+import { GetCurrentlyPlayingTrack } from "@/domain/usecases";
 import { ReactNode } from "react";
 
 export enum PlayerState {
@@ -20,16 +21,10 @@ export interface PlayerControlsContext {
     total: string;
     current: string;
   };
-  currentTrackMetadata: PlayerMetadatas;
+  currentTrackMetadata?: GetCurrentlyPlayingTrack.Model;
 }
 
 export interface PlayerControlsProviderProps {
   children?: ReactNode;
-}
-
-export interface PlayerMetadatas {
-  source: any;
-  cover: string;
-  artist: string;
-  track: string;
+  remoteGetCurrentlyPlaying: GetCurrentlyPlayingTrack;
 }
