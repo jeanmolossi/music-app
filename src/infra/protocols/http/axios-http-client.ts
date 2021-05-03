@@ -2,10 +2,11 @@ import axios from "axios";
 import { HttpClient } from "@/data/protocols/http/http-client";
 
 export class AxiosHttpClient<T = unknown> implements HttpClient<T> {
-  async request<BodyType extends URLSearchParams>({
+  async request<BodyType = any>({
     method,
     body,
     url,
+    headers,
   }: HttpClient.Params<BodyType>): Promise<HttpClient.HttpResponse<T>> {
     let axiosResponse: T;
 
@@ -13,7 +14,8 @@ export class AxiosHttpClient<T = unknown> implements HttpClient<T> {
       const httpResponse = await axios.request<T>({
         method,
         url,
-        data: new URLSearchParams(body).toString(),
+        data: body,
+        headers,
       });
 
       axiosResponse = httpResponse.data;
