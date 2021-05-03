@@ -8,10 +8,9 @@ import {
   Player,
   Text,
   usePlayer,
-  usePlayerContext,
-  PlayerState,
   AuthorizeSpotifyModal,
 } from "@/presentation/components";
+import { usePlayerContext, PlayerState } from "@/presentation/contexts";
 import db from "@/data/mock/fake_db.json";
 import { Theme } from "@/presentation/styles";
 import { PopularList, AlbumsList, SocialsInfo } from "./components";
