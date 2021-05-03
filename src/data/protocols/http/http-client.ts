@@ -1,5 +1,5 @@
 export interface HttpClient<T = unknown> {
-  request<BodyType extends URLSearchParams>(
+  request<BodyType = any>(
     params: HttpClient.Params<BodyType>
   ): Promise<HttpClient.HttpResponse<T>>;
 }
