@@ -20,6 +20,7 @@ export default StyleSheet.create({
   contentContainer: {
     paddingHorizontal: 16,
     paddingBottom: 40,
+    flex: 1,
   },
 
   addorn: {
@@ -41,12 +42,16 @@ export default StyleSheet.create({
     margin: 8,
     elevation: 8,
     borderRadius: 32,
+    flex: 1,
   },
 
   cover_image: {
-    width,
-    height: width,
+    maxWidth: width,
+    maxHeight: width,
+    flex: 1,
     borderRadius: 32,
+
+    resizeMode: "cover",
   },
 
   player_infos: {
