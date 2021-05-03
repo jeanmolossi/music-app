@@ -1,3 +1,4 @@
+import { LoadUserInfo } from "@/domain/usecases";
 import { useCallback, useEffect, useState } from "react";
 import { HomeProps } from "./types";
 
@@ -6,6 +7,7 @@ export function useHomeHelpers({
   setSpotifyAuthorizationCode,
 }: HomeProps) {
   const [code, setCode] = useState("");
+  const [userInfo, setUserInfo] = useState<LoadUserInfo.Model>();
 
   const onNavigationStateChange = useCallback((code: string) => {
     setSpotifyAuthorizationCode(code).then(() => {
@@ -16,12 +18,13 @@ export function useHomeHelpers({
   useEffect(() => {
     if (code)
       remoteLoadCurrentUserInfo.load().then((response) => {
-        console.log({ response: response.followers });
+        setUserInfo(response);
       });
   }, [code]);
 
   return {
     code,
     onNavigationStateChange,
+    userInfo,
   };
 }
