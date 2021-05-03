@@ -1,5 +1,5 @@
-import { HttpClient } from "@/domain/protocols/http/http-client";
 import axios from "axios";
+import { HttpClient } from "@/data/protocols/http/http-client";
 
 export class AxiosHttpClient<T> implements HttpClient<T> {
   constructor(private readonly url: string) {}
