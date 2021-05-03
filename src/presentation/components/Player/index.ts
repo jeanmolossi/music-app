@@ -1,6 +1,4 @@
 export * from "./Player";
-export * from "./context/helpers";
-export * from "./context/usePlayerControls";
 export * from "./controls";
 export * from "./progress";
 export * from "./helpers";

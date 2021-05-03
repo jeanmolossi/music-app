@@ -122,13 +122,7 @@ export const PlayerControlsProvider = ({
 
     playbackObject
       .loadAsync(
-        {
-          uri: "https://api.spotify.com/v1/tracks/7IG7laqVpcvIIULrwWP5SA",
-          headers: {
-            Authorization:
-              "Bearer BQBM9zLzpA7Atau_q9ab3FFsD6C3Jz7pzjIQ6WTfGb-F9luG-yI3hkRruHlhNGOXquZwkhVA1gUBLCbByIWCtUH8D7iDcPeMO7XnWPfKsij9oZ6_Gd63PTmYDyLxx_W60cU3b34fGjKhzgNqIqGnabxN6Dx9t1FgSB4UR9ksMLs71mt6H71RXs3-eDiSBf3rJv-HooJRlBiHuK4ucg7xt0w2m7lgrwYBSo87hZlSug2J4lHOaJov5p1hva8nzuSEz2zBo-QubLsCbwwJiVL9Ida-Qw",
-          },
-        },
+        playlist[currentTrackIndex].source,
         {
           progressUpdateIntervalMillis: 1000,
         },

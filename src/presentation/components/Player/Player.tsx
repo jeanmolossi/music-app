@@ -6,7 +6,7 @@ import { PanGestureHandler, ScrollView } from "react-native-gesture-handler";
 import Animated from "react-native-reanimated";
 import { Theme } from "@/presentation/styles";
 import { Text } from "@/presentation/components";
-import { usePlayerContext } from "./context/usePlayerControls";
+import { usePlayerContext } from "@/presentation/contexts";
 import { Controls } from "./controls";
 import { usePlayerHelpers } from "./helpers";
 import styles from "./styles";
