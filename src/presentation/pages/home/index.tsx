@@ -18,6 +18,7 @@ import { PopularList, AlbumsList, SocialsInfo } from "./components";
 import { useHomeHelpers } from "./helpers";
 import styles from "./styles";
 import { HomeProps } from "./types";
+import { useHomeAnimations } from "./home-animations";
 
 export const Home = (props: HomeProps) => {
   const {
@@ -25,7 +26,9 @@ export const Home = (props: HomeProps) => {
     textAnimation,
     textBoxAnimation,
     onGestureEvent,
-  } = useHomeHelpers(props);
+  } = useHomeAnimations();
+
+  const { onNavigationStateChange, code } = useHomeHelpers(props);
 
   const { onClose, visibility, onOpen } = usePlayer();
   const { playbackState, currentTrackMetadata } = usePlayerContext();
@@ -34,7 +37,12 @@ export const Home = (props: HomeProps) => {
     <View style={styles.container}>
       <Player {...{ onClose, visibility, onOpen }} />
 
-      <AuthorizeSpotifyModal />
+      {!code && (
+        <AuthorizeSpotifyModal
+          visible={!code}
+          onNavigationStateChange={onNavigationStateChange}
+        />
+      )}
 
       <ImageBackground
         source={{ uri: currentTrackMetadata.cover }}
