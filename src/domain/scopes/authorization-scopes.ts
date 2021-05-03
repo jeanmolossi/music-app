@@ -173,7 +173,6 @@
  */
 export type Scopes =
   | "ugc-image-upload"
-  | "Listening History"
   | "user-read-recently-played"
   | "user-top-read"
   | "user-read-playback-position"
