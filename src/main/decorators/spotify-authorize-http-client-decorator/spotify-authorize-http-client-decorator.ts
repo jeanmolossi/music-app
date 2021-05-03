@@ -2,6 +2,7 @@ import base64 from "react-native-base64";
 import spotifyCredentials from "@/domain/config/credentials/spotify/spotify.credentials";
 import { HttpClient } from "@/data/protocols/http/http-client";
 import { GetStorage, SetStorage } from "@/data/protocols/cache";
+import { Spotify } from "@/domain/spotify";
 
 export class SpotifyAuthorizeHttpClientDecorator<T = unknown>
   implements HttpClient<T> {
