@@ -1,3 +1,4 @@
+export * from "./remote-browse-featured-playlists";
 export * from "./remote-get-currently-playing-track";
 export * from "./remote-get-my-playlists";
 export * from "./remote-get-recently-played";
