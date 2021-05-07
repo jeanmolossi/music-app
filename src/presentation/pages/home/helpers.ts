@@ -32,14 +32,14 @@ export function useHomeHelpers({
     if (code) {
       remoteLoadCurrentUserInfo.load().then((response) => {
         setUserInfo(response);
-      });
 
-      remoteGetMyPlaylists.load().then((remotePlaylists) => {
-        setPlaylists(remotePlaylists);
-      });
+        remoteGetMyPlaylists.load().then((remotePlaylists) => {
+          setPlaylists(remotePlaylists);
+        });
 
-      remoteBrowseFeaturedPlaylists.load().then((remoteFeaturedPlaylists) => {
-        setFeaturedPlaylists(remoteFeaturedPlaylists);
+        remoteBrowseFeaturedPlaylists.load().then((remoteFeaturedPlaylists) => {
+          setFeaturedPlaylists(remoteFeaturedPlaylists);
+        });
       });
     }
   }, [code]);
