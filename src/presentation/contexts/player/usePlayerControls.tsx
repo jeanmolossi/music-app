@@ -10,9 +10,9 @@ import {
   PlayerControlsContext,
   PlayerControlsProviderProps,
   PlayerState,
-  PlayerMetadatas,
 } from "./helpers";
-import playlist from "@/data/mock/playlist";
+
+import { GetCurrentlyPlayingTrack } from "@/domain/usecases";
 
 const PlayerContext = createContext({} as PlayerControlsContext);
 
@@ -20,13 +20,18 @@ export const MUSIC_PATH = "@/data/assets/Haikaiss_–_A_Praga.mp3";
 
 const playbackObject = new Audio.Sound();
 
+const playlist: any[] = [];
+
 export const PlayerControlsProvider = ({
   children,
+  remoteGetCurrentlyPlaying,
 }: PlayerControlsProviderProps) => {
   const [
     currentTrackMetadata,
     setCurrentTrackMetadata,
-  ] = useState<PlayerMetadatas>(playlist[0]);
+  ] = useState<GetCurrentlyPlayingTrack.Model>();
+  const [nextCheck, setNextCheck] = useState(-1);
+  const [reload, setReload] = useState(true);
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const [playbackState, setPlaybackState] = useState(PlayerState.LOADING);
   const [progressState, setProgressState] = useState(0);
@@ -116,39 +121,63 @@ export const PlayerControlsProvider = ({
   }, [timerInMinutes]);
 
   useEffect(() => {
-    setCurrentTrackMetadata(playlist[currentTrackIndex]);
-
     setPlaybackState(PlayerState.LOADING);
 
-    playbackObject
-      .loadAsync(
-        {
-          uri: "https://api.spotify.com/v1/tracks/7IG7laqVpcvIIULrwWP5SA",
-          headers: {
-            Authorization:
-              "Bearer BQBM9zLzpA7Atau_q9ab3FFsD6C3Jz7pzjIQ6WTfGb-F9luG-yI3hkRruHlhNGOXquZwkhVA1gUBLCbByIWCtUH8D7iDcPeMO7XnWPfKsij9oZ6_Gd63PTmYDyLxx_W60cU3b34fGjKhzgNqIqGnabxN6Dx9t1FgSB4UR9ksMLs71mt6H71RXs3-eDiSBf3rJv-HooJRlBiHuK4ucg7xt0w2m7lgrwYBSo87hZlSug2J4lHOaJov5p1hva8nzuSEz2zBo-QubLsCbwwJiVL9Ida-Qw",
+    if (playlist[currentTrackIndex])
+      playbackObject
+        .loadAsync(
+          playlist[currentTrackIndex].source,
+          {
+            progressUpdateIntervalMillis: 1000,
           },
-        },
-        {
-          progressUpdateIntervalMillis: 1000,
-        },
-        true
-      )
-      .then((status) => {
-        if (status.isLoaded) {
-          playbackObject.setOnPlaybackStatusUpdate(onPlaybackStatusUpdate);
-          setTotalDuration(status.durationMillis || 0);
-          setProgressState(status.positionMillis);
+          true
+        )
+        .then((status) => {
+          if (status.isLoaded) {
+            playbackObject.setOnPlaybackStatusUpdate(onPlaybackStatusUpdate);
+            setTotalDuration(status.durationMillis || 0);
+            setProgressState(status.positionMillis);
 
-          if (currentTrackIndex > 0) {
-            setPlaybackState(PlayerState.PLAYING);
-            playMusic();
-          } else {
-            setPlaybackState(PlayerState.STOPPED);
+            if (currentTrackIndex > 0) {
+              setPlaybackState(PlayerState.PLAYING);
+              playMusic();
+            } else {
+              setPlaybackState(PlayerState.STOPPED);
+            }
           }
-        }
-      });
+        });
   }, [currentTrackIndex, playlist]);
+
+  useEffect(() => {
+    let CheckInterval: NodeJS.Timeout;
+    if (nextCheck >= 0)
+      CheckInterval = setTimeout(() => {
+        setReload(true);
+      }, nextCheck);
+
+    return () => {
+      clearTimeout(CheckInterval);
+    };
+  }, [nextCheck]);
+
+  useEffect(() => {
+    if (reload) {
+      console.log("RELOAD");
+      remoteGetCurrentlyPlaying.get().then((response) => {
+        setCurrentTrackMetadata(response);
+
+        if (response.is_playing) {
+          const nextCheckCalc =
+            (response.item?.duration_ms || 1) - response.progress_ms;
+
+          console.log(nextCheckCalc);
+          setNextCheck(nextCheckCalc);
+        }
+
+        setReload(false);
+      });
+    }
+  }, [reload]);
 
   return (
     <PlayerContext.Provider

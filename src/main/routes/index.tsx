@@ -4,8 +4,8 @@ import {
   createStackNavigator,
   StackNavigationOptions,
 } from "@react-navigation/stack";
-import { HomePageFactory } from "@/main/factory/pages";
-import { PlayerControlsProvider } from "@/presentation/components";
+import { HomePageFactory } from "@/main/factories/pages";
+import { PlayerProviderFactory } from "@/main/factories/contexts";
 
 interface MainRoutesProps {}
 
@@ -17,12 +17,12 @@ export const MainRoutes = ({}: MainRoutesProps) => {
   };
 
   return (
-    <PlayerControlsProvider>
+    <PlayerProviderFactory>
       <NavigationContainer>
         <Navigator {...{ screenOptions }}>
           <Screen name="home" component={HomePageFactory} />
         </Navigator>
       </NavigationContainer>
-    </PlayerControlsProvider>
+    </PlayerProviderFactory>
   );
 };

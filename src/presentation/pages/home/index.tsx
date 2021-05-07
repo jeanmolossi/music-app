@@ -8,24 +8,31 @@ import {
   Player,
   Text,
   usePlayer,
-  usePlayerContext,
-  PlayerState,
+  AuthorizeSpotifyModal,
 } from "@/presentation/components";
-import db from "@/data/mock/fake_db.json";
+import { usePlayerContext, PlayerState } from "@/presentation/contexts";
 import { Theme } from "@/presentation/styles";
 import { PopularList, AlbumsList, SocialsInfo } from "./components";
 import { useHomeHelpers } from "./helpers";
 import styles from "./styles";
+import { HomeProps } from "./types";
+import { useHomeAnimations } from "./home-animations";
 
-interface HomeProps {}
-
-export const Home = ({}: HomeProps) => {
+export const Home = (props: HomeProps) => {
   const {
     animatedStyle,
     textAnimation,
     textBoxAnimation,
     onGestureEvent,
-  } = useHomeHelpers();
+  } = useHomeAnimations();
+
+  const {
+    onNavigationStateChange,
+    code,
+    userInfo,
+    playlists,
+    featuredPlaylists,
+  } = useHomeHelpers(props);
 
   const { onClose, visibility, onOpen } = usePlayer();
   const { playbackState, currentTrackMetadata } = usePlayerContext();
@@ -33,25 +40,35 @@ export const Home = ({}: HomeProps) => {
   return (
     <View style={styles.container}>
       <Player {...{ onClose, visibility, onOpen }} />
-      <ImageBackground
-        source={{ uri: currentTrackMetadata.cover }}
-        style={styles.imageCover}
-      >
-        <Animated.View style={[textBoxAnimation, { width: "100%" }]}>
-          <LinearGradient
-            colors={["#000000", "#00000000"]}
-            start={{ x: 0.5, y: 1 }}
-            end={{ x: 0.5, y: 0 }}
-          >
-            <Animated.View style={[styles.track_info]}>
-              <Text style={styles.track_info_badge}>ARTISTA</Text>
-              <Animated.Text style={[styles.track_info_music, textAnimation]}>
-                {currentTrackMetadata.artist}
-              </Animated.Text>
-            </Animated.View>
-          </LinearGradient>
-        </Animated.View>
-      </ImageBackground>
+
+      {!code && (
+        <AuthorizeSpotifyModal
+          visible={!code}
+          onNavigationStateChange={onNavigationStateChange}
+        />
+      )}
+
+      {currentTrackMetadata?.item?.album.images[0].url && (
+        <ImageBackground
+          source={{ uri: currentTrackMetadata.item.album.images[0].url }}
+          style={styles.imageCover}
+        >
+          <Animated.View style={[textBoxAnimation, { width: "100%" }]}>
+            <LinearGradient
+              colors={["#000000", "#00000000"]}
+              start={{ x: 0.5, y: 1 }}
+              end={{ x: 0.5, y: 0 }}
+            >
+              <Animated.View style={[styles.track_info]}>
+                <Text style={styles.track_info_badge}>ARTISTA</Text>
+                <Animated.Text style={[styles.track_info_music, textAnimation]}>
+                  {currentTrackMetadata?.item.artists[0].name || ""}
+                </Animated.Text>
+              </Animated.View>
+            </LinearGradient>
+          </Animated.View>
+        </ImageBackground>
+      )}
 
       <PanGestureHandler onGestureEvent={onGestureEvent}>
         <Animated.View style={[styles.more_content, animatedStyle]}>
@@ -72,18 +89,24 @@ export const Home = ({}: HomeProps) => {
             </LinearGradient>
           </Pressable>
 
-          <SocialsInfo />
+          <SocialsInfo
+            {...{
+              followers: userInfo?.followers?.total,
+              country: userInfo?.country,
+              name: userInfo?.display_name,
+            }}
+          />
 
           <View style={styles.popular_content}>
             <Text variant="suave">Popular</Text>
 
-            <PopularList data={db.popular} />
+            <PopularList data={featuredPlaylists} />
 
             <Text variant="suave" style={{ marginTop: 16 }}>
               Albums
             </Text>
 
-            <AlbumsList data={db.albums} />
+            <AlbumsList data={playlists} />
           </View>
         </Animated.View>
       </PanGestureHandler>

@@ -95,8 +95,10 @@ export default StyleSheet.create({
 
   flatlist_item_style: {
     marginRight: 16,
-    justifyContent: "center",
+    justifyContent: "flex-start",
+    alignItems: "stretch",
     position: "relative",
+    width: 84,
   },
 
   fl_cover_style: {

@@ -2,7 +2,8 @@ import React from "react";
 import { View } from "react-native";
 import Slider from "@react-native-community/slider";
 import { Theme } from "@/presentation/styles";
-import { Text, usePlayerContext } from "@/presentation/components";
+import { Text } from "@/presentation/components";
+import { usePlayerContext } from "@/presentation/contexts";
 import styles from "../styles";
 
 interface ProgressProps {}
