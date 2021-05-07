@@ -1,6 +1,6 @@
 import {
+  BrowseFeaturedPlaylists,
   GetMyPlaylists,
-  GetRecentlyPlayed,
   LoadUserInfo,
 } from "@/domain/usecases";
 import {
@@ -12,7 +12,7 @@ export interface HomeProps {
   setSpotifyAuthorizationCode: (auth_code: string) => Promise<void>;
   remoteLoadCurrentUserInfo: LoadUserInfo;
   remoteGetMyPlaylists: GetMyPlaylists;
-  remoteGetRecentlyPlayed: GetRecentlyPlayed;
+  remoteBrowseFeaturedPlaylists: BrowseFeaturedPlaylists;
 }
 
 export type AnimationE = Readonly<

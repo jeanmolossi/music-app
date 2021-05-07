@@ -1,4 +1,5 @@
 import {
+  BrowseFeaturedPlaylists,
   GetMyPlaylists,
   GetRecentlyPlayed,
   LoadUserInfo,
@@ -10,16 +11,16 @@ export function useHomeHelpers({
   setSpotifyAuthorizationCode,
   remoteLoadCurrentUserInfo,
   remoteGetMyPlaylists,
-  remoteGetRecentlyPlayed,
+  remoteBrowseFeaturedPlaylists,
 }: HomeProps) {
   const [code, setCode] = useState("");
 
   const [userInfo, setUserInfo] = useState<LoadUserInfo.Model>();
   const [playlists, setPlaylists] = useState<GetMyPlaylists.Model>();
   const [
-    recentlyPlayed,
-    setRecentlyPlayed,
-  ] = useState<GetRecentlyPlayed.Model>();
+    featuredPlaylists,
+    setFeaturedPlaylists,
+  ] = useState<BrowseFeaturedPlaylists.Model>();
 
   const onNavigationStateChange = useCallback((code: string) => {
     setSpotifyAuthorizationCode(code).then(() => {
@@ -37,8 +38,8 @@ export function useHomeHelpers({
         setPlaylists(remotePlaylists);
       });
 
-      remoteGetRecentlyPlayed.load().then((remoteRecentlyPlayed) => {
-        setRecentlyPlayed(remoteRecentlyPlayed);
+      remoteBrowseFeaturedPlaylists.load().then((remoteFeaturedPlaylists) => {
+        setFeaturedPlaylists(remoteFeaturedPlaylists);
       });
     }
   }, [code]);
@@ -48,6 +49,6 @@ export function useHomeHelpers({
     onNavigationStateChange,
     userInfo,
     playlists,
-    recentlyPlayed,
+    featuredPlaylists,
   };
 }
