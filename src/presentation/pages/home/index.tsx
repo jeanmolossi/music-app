@@ -27,9 +27,13 @@ export const Home = (props: HomeProps) => {
     onGestureEvent,
   } = useHomeAnimations();
 
-  const { onNavigationStateChange, code, userInfo, playlists } = useHomeHelpers(
-    props
-  );
+  const {
+    onNavigationStateChange,
+    code,
+    userInfo,
+    playlists,
+    recentlyPlayed,
+  } = useHomeHelpers(props);
 
   const { onClose, visibility, onOpen } = usePlayer();
   const { playbackState, currentTrackMetadata } = usePlayerContext();
@@ -97,7 +101,7 @@ export const Home = (props: HomeProps) => {
           <View style={styles.popular_content}>
             <Text variant="suave">Popular</Text>
 
-            <PopularList data={db.popular} />
+            <PopularList data={recentlyPlayed} />
 
             <Text variant="suave" style={{ marginTop: 16 }}>
               Albums
