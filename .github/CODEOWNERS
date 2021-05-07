@@ -1,1 +1,4 @@
-./ @jeanmolossi
+*.ts @jeanmolossi
+*.json @jeanmolossi
+*.js @jeanmolossi
+src/ @jeanmolossi
