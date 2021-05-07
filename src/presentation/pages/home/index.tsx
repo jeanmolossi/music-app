@@ -27,7 +27,9 @@ export const Home = (props: HomeProps) => {
     onGestureEvent,
   } = useHomeAnimations();
 
-  const { onNavigationStateChange, code, userInfo } = useHomeHelpers(props);
+  const { onNavigationStateChange, code, userInfo, playlists } = useHomeHelpers(
+    props
+  );
 
   const { onClose, visibility, onOpen } = usePlayer();
   const { playbackState, currentTrackMetadata } = usePlayerContext();
@@ -101,7 +103,7 @@ export const Home = (props: HomeProps) => {
               Albums
             </Text>
 
-            <AlbumsList data={db.albums} />
+            <AlbumsList data={playlists} />
           </View>
         </Animated.View>
       </PanGestureHandler>

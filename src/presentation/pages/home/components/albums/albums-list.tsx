@@ -9,9 +9,10 @@ import { Theme } from "@/presentation/styles";
 import { Text } from "@/presentation/components";
 import styles from "@/presentation/pages/home/styles";
 import { useCallback } from "react";
+import { GetMyPlaylists } from "@/domain/usecases";
 
 interface AlbumsListProps {
-  data: any[];
+  data?: GetMyPlaylists.Model;
 }
 
 export const AlbumsList = ({ data }: AlbumsListProps) => {
@@ -21,12 +22,12 @@ export const AlbumsList = ({ data }: AlbumsListProps) => {
 
   return (
     <FlatList
-      data={data}
+      data={data?.items}
       showsVerticalScrollIndicator={false}
       style={styles.albums_flat_list}
       contentContainerStyle={styles.albums_flat_list_container}
       keyExtractor={(_, index) => index.toString()}
-      renderItem={({ item }) => (
+      renderItem={({ item }: { item: GetMyPlaylists.Model["items"][0] }) => (
         <View
           style={styles.algums_item}
           onStartShouldSetResponder={() => true}
@@ -34,10 +35,13 @@ export const AlbumsList = ({ data }: AlbumsListProps) => {
           onMoveShouldSetResponderCapture={() => true}
           onMoveShouldSetResponder={() => true}
         >
-          <Image style={styles.album_image} source={{ uri: item.cover }} />
+          <Image
+            style={styles.album_image}
+            source={{ uri: item.images[0].url }}
+          />
           <View style={styles.album_middle_content}>
-            <Text>{item.title}</Text>
-            <Text variant="dark">{item.year}</Text>
+            <Text>{truncate(item.name, 45)}</Text>
+            <Text variant="dark">{item.tracks.total}</Text>
           </View>
           <TouchableWithoutFeedback
             onPress={moreOption}
@@ -50,3 +54,13 @@ export const AlbumsList = ({ data }: AlbumsListProps) => {
     />
   );
 };
+
+function truncate(text: string, length: number = 35) {
+  const regex = new RegExp("(?=.*$).{" + length + "}");
+
+  const matcher = text.match(regex);
+
+  const truncated = matcher?.[0] ? `${matcher?.[0]}...` : null;
+
+  return truncated || text;
+}

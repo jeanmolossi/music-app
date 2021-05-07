@@ -1,4 +1,4 @@
-import { LoadUserInfo } from "@/domain/usecases";
+import { GetMyPlaylists, LoadUserInfo } from "@/domain/usecases";
 import {
   GestureEventPayload,
   PanGestureHandlerEventPayload,
@@ -7,6 +7,7 @@ import {
 export interface HomeProps {
   setSpotifyAuthorizationCode: (auth_code: string) => Promise<void>;
   remoteLoadCurrentUserInfo: LoadUserInfo;
+  remoteGetMyPlaylists: GetMyPlaylists;
 }
 
 export type AnimationE = Readonly<
