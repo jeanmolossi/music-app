@@ -1,7 +1,9 @@
 import React from "react";
 import { Home } from "@/presentation/pages";
 import {
+  makeRemoteBrowseFeaturedPlaylists,
   makeRemoteGetMyPlaylists,
+  makeRemoteGetRecentlyPlayed,
   makeRemoteLoadCurrentUserInfo,
 } from "@/main/factories/usecases";
 import { setSpotifyAuthorizationCodeAdapter } from "@/main/adapters";
@@ -12,6 +14,7 @@ export const HomePageFactory = ({}: HomePageFactoryProps) => {
   const remoteLoadCurrentUserInfo = makeRemoteLoadCurrentUserInfo();
   const setSpotifyAuthorizationCode = setSpotifyAuthorizationCodeAdapter;
   const remoteGetMyPlaylists = makeRemoteGetMyPlaylists();
+  const remoteBrowseFeaturedPlaylists = makeRemoteBrowseFeaturedPlaylists();
 
   return (
     <Home
@@ -19,6 +22,7 @@ export const HomePageFactory = ({}: HomePageFactoryProps) => {
         remoteLoadCurrentUserInfo,
         setSpotifyAuthorizationCode,
         remoteGetMyPlaylists,
+        remoteBrowseFeaturedPlaylists,
       }}
     />
   );

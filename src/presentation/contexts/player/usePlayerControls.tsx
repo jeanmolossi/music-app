@@ -11,7 +11,7 @@ import {
   PlayerControlsProviderProps,
   PlayerState,
 } from "./helpers";
-import playlist from "@/data/mock/playlist";
+
 import { GetCurrentlyPlayingTrack } from "@/domain/usecases";
 
 const PlayerContext = createContext({} as PlayerControlsContext);
@@ -19,6 +19,8 @@ const PlayerContext = createContext({} as PlayerControlsContext);
 export const MUSIC_PATH = "@/data/assets/Haikaiss_–_A_Praga.mp3";
 
 const playbackObject = new Audio.Sound();
+
+const playlist: any[] = [];
 
 export const PlayerControlsProvider = ({
   children,
@@ -121,28 +123,29 @@ export const PlayerControlsProvider = ({
   useEffect(() => {
     setPlaybackState(PlayerState.LOADING);
 
-    playbackObject
-      .loadAsync(
-        playlist[currentTrackIndex].source,
-        {
-          progressUpdateIntervalMillis: 1000,
-        },
-        true
-      )
-      .then((status) => {
-        if (status.isLoaded) {
-          playbackObject.setOnPlaybackStatusUpdate(onPlaybackStatusUpdate);
-          setTotalDuration(status.durationMillis || 0);
-          setProgressState(status.positionMillis);
+    if (playlist[currentTrackIndex])
+      playbackObject
+        .loadAsync(
+          playlist[currentTrackIndex].source,
+          {
+            progressUpdateIntervalMillis: 1000,
+          },
+          true
+        )
+        .then((status) => {
+          if (status.isLoaded) {
+            playbackObject.setOnPlaybackStatusUpdate(onPlaybackStatusUpdate);
+            setTotalDuration(status.durationMillis || 0);
+            setProgressState(status.positionMillis);
 
-          if (currentTrackIndex > 0) {
-            setPlaybackState(PlayerState.PLAYING);
-            playMusic();
-          } else {
-            setPlaybackState(PlayerState.STOPPED);
+            if (currentTrackIndex > 0) {
+              setPlaybackState(PlayerState.PLAYING);
+              playMusic();
+            } else {
+              setPlaybackState(PlayerState.STOPPED);
+            }
           }
-        }
-      });
+        });
   }, [currentTrackIndex, playlist]);
 
   useEffect(() => {

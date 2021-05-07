@@ -11,7 +11,6 @@ import {
   AuthorizeSpotifyModal,
 } from "@/presentation/components";
 import { usePlayerContext, PlayerState } from "@/presentation/contexts";
-import db from "@/data/mock/fake_db.json";
 import { Theme } from "@/presentation/styles";
 import { PopularList, AlbumsList, SocialsInfo } from "./components";
 import { useHomeHelpers } from "./helpers";
@@ -27,9 +26,13 @@ export const Home = (props: HomeProps) => {
     onGestureEvent,
   } = useHomeAnimations();
 
-  const { onNavigationStateChange, code, userInfo, playlists } = useHomeHelpers(
-    props
-  );
+  const {
+    onNavigationStateChange,
+    code,
+    userInfo,
+    playlists,
+    featuredPlaylists,
+  } = useHomeHelpers(props);
 
   const { onClose, visibility, onOpen } = usePlayer();
   const { playbackState, currentTrackMetadata } = usePlayerContext();
@@ -88,7 +91,7 @@ export const Home = (props: HomeProps) => {
 
           <SocialsInfo
             {...{
-              followers: userInfo?.followers.total,
+              followers: userInfo?.followers?.total,
               country: userInfo?.country,
               name: userInfo?.display_name,
             }}
@@ -97,7 +100,7 @@ export const Home = (props: HomeProps) => {
           <View style={styles.popular_content}>
             <Text variant="suave">Popular</Text>
 
-            <PopularList data={db.popular} />
+            <PopularList data={featuredPlaylists} />
 
             <Text variant="suave" style={{ marginTop: 16 }}>
               Albums
