@@ -32,6 +32,9 @@ export class SpotifyAuthorizeHttpClientDecorator<T = unknown>
 
       refresh_token = new_refresh_token;
 
+      if (!token_type || !access_token)
+        throw new Error("Invalid token type and access token");
+
       Authorization = `${token_type} ${access_token}`;
 
       await this.storageAdapter.set("refresh_token", refresh_token);
