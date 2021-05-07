@@ -35,8 +35,9 @@ export const Player = (props: PlayerProps) => {
           end={{ x: 0, y: 1 }}
           style={styles.addorn}
         />
+
         <PanGestureHandler onGestureEvent={onGestureEvent}>
-          <Animated.View>
+          <Animated.View style={{ flex: 1 }}>
             <View style={styles.header}>
               <Pressable onPress={onClose}>
                 <Feather
@@ -60,10 +61,14 @@ export const Player = (props: PlayerProps) => {
             </View>
 
             <View style={styles.cover}>
-              <Image
-                source={{ uri: currentTrackMetadata.cover }}
-                style={styles.cover_image}
-              />
+              {currentTrackMetadata?.item && (
+                <Image
+                  source={{
+                    uri: currentTrackMetadata.item.album.images[0].url,
+                  }}
+                  style={styles.cover_image}
+                />
+              )}
             </View>
           </Animated.View>
         </PanGestureHandler>
@@ -72,9 +77,11 @@ export const Player = (props: PlayerProps) => {
           <View style={styles.infos_header}>
             <View style={styles.playing_track_info}>
               <Text size="xl" bold>
-                {currentTrackMetadata.track}
+                {currentTrackMetadata?.item?.name || "Musica"}
               </Text>
-              <Text variant="suave">{currentTrackMetadata.artist}</Text>
+              <Text variant="suave">
+                {currentTrackMetadata?.item?.artists[0].name || "Artista"}
+              </Text>
             </View>
             <Pressable
               onPress={() => Alert.alert("OK")}

@@ -43,25 +43,27 @@ export const Home = (props: HomeProps) => {
         />
       )}
 
-      <ImageBackground
-        source={{ uri: currentTrackMetadata.cover }}
-        style={styles.imageCover}
-      >
-        <Animated.View style={[textBoxAnimation, { width: "100%" }]}>
-          <LinearGradient
-            colors={["#000000", "#00000000"]}
-            start={{ x: 0.5, y: 1 }}
-            end={{ x: 0.5, y: 0 }}
-          >
-            <Animated.View style={[styles.track_info]}>
-              <Text style={styles.track_info_badge}>ARTISTA</Text>
-              <Animated.Text style={[styles.track_info_music, textAnimation]}>
-                {currentTrackMetadata.artist}
-              </Animated.Text>
-            </Animated.View>
-          </LinearGradient>
-        </Animated.View>
-      </ImageBackground>
+      {currentTrackMetadata?.item?.album.images[0].url && (
+        <ImageBackground
+          source={{ uri: currentTrackMetadata.item.album.images[0].url }}
+          style={styles.imageCover}
+        >
+          <Animated.View style={[textBoxAnimation, { width: "100%" }]}>
+            <LinearGradient
+              colors={["#000000", "#00000000"]}
+              start={{ x: 0.5, y: 1 }}
+              end={{ x: 0.5, y: 0 }}
+            >
+              <Animated.View style={[styles.track_info]}>
+                <Text style={styles.track_info_badge}>ARTISTA</Text>
+                <Animated.Text style={[styles.track_info_music, textAnimation]}>
+                  {currentTrackMetadata?.item.artists[0].name || ""}
+                </Animated.Text>
+              </Animated.View>
+            </LinearGradient>
+          </Animated.View>
+        </ImageBackground>
+      )}
 
       <PanGestureHandler onGestureEvent={onGestureEvent}>
         <Animated.View style={[styles.more_content, animatedStyle]}>

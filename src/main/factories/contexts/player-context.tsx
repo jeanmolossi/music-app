@@ -1,5 +1,6 @@
-import { PlayerControlsProvider } from "@/presentation/contexts";
 import React, { ReactNode } from "react";
+import { PlayerControlsProvider } from "@/presentation/contexts";
+import { makeRemoteGetCurrentlyPlaying } from "../usecases/remote-get-currently-playing-track";
 
 interface PlayerProviderFactoryProps {
   children?: ReactNode;
@@ -8,5 +9,11 @@ interface PlayerProviderFactoryProps {
 export const PlayerProviderFactory = ({
   children,
 }: PlayerProviderFactoryProps) => {
-  return <PlayerControlsProvider>{children}</PlayerControlsProvider>;
+  const remoteGetCurrentlyPlaying = makeRemoteGetCurrentlyPlaying();
+
+  return (
+    <PlayerControlsProvider {...{ remoteGetCurrentlyPlaying }}>
+      {children}
+    </PlayerControlsProvider>
+  );
 };
