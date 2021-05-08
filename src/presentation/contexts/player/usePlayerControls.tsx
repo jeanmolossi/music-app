@@ -19,8 +19,6 @@ export const MUSIC_PATH = "@/data/assets/Haikaiss_–_A_Praga.mp3";
 
 const playbackObject = new Audio.Sound();
 
-const playlist: any[] = [];
-
 export const PlayerControlsProvider = ({
   children,
   remoteGetCurrentlyPlaying,
@@ -63,10 +61,6 @@ export const PlayerControlsProvider = ({
       if (status.didJustFinish) {
         playbackObject.unloadAsync().then(() => {
           setPlaybackState(PlayerState.STOPPED);
-          setCurrentTrackIndex((oldIndex) => {
-            if (playlist.length > oldIndex + 1) return oldIndex + 1;
-            return 0;
-          });
         });
       }
     },
@@ -126,13 +120,11 @@ export const PlayerControlsProvider = ({
   useEffect(() => {
     setPlaybackState(PlayerState.LOADING);
 
-    if (playlist[currentTrackIndex])
+    if (currentTrackMetadata?.track.preview_url)
       playbackObject
         .loadAsync(
-          playlist[currentTrackIndex].source,
-          {
-            progressUpdateIntervalMillis: 1000,
-          },
+          { uri: currentTrackMetadata?.track.preview_url },
+          { progressUpdateIntervalMillis: 1000 },
           true
         )
         .then((status) => {
@@ -149,7 +141,7 @@ export const PlayerControlsProvider = ({
             }
           }
         });
-  }, [currentTrackIndex, playlist]);
+  }, [currentTrackMetadata]);
 
   useEffect(() => {
     let CheckInterval: NodeJS.Timeout;
