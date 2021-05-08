@@ -26,6 +26,8 @@ export const AuthorizeSpotifyModal = ({
             );
 
             if (onNavigationStateChange && !!urlResult && !check_if_no_code) {
+              console.log({ urlResult });
+
               onNavigationStateChange(urlResult);
             }
           }}
