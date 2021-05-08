@@ -15,6 +15,7 @@ export const HomePageFactory = ({}: HomePageFactoryProps) => {
   const setSpotifyAuthorizationCode = setSpotifyAuthorizationCodeAdapter;
   const remoteGetMyPlaylists = makeRemoteGetMyPlaylists();
   const remoteBrowseFeaturedPlaylists = makeRemoteBrowseFeaturedPlaylists();
+  const remoteRecentlyPlayed = makeRemoteGetRecentlyPlayed();
 
   return (
     <Home
@@ -23,6 +24,7 @@ export const HomePageFactory = ({}: HomePageFactoryProps) => {
         setSpotifyAuthorizationCode,
         remoteGetMyPlaylists,
         remoteBrowseFeaturedPlaylists,
+        remoteRecentlyPlayed,
       }}
     />
   );

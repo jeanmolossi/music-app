@@ -1,6 +1,7 @@
 import {
   BrowseFeaturedPlaylists,
   GetMyPlaylists,
+  GetRecentlyPlayed,
   LoadUserInfo,
 } from "@/domain/usecases";
 import {
@@ -13,6 +14,7 @@ export interface HomeProps {
   remoteLoadCurrentUserInfo: LoadUserInfo;
   remoteGetMyPlaylists: GetMyPlaylists;
   remoteBrowseFeaturedPlaylists: BrowseFeaturedPlaylists;
+  remoteRecentlyPlayed: GetRecentlyPlayed;
 }
 
 export type AnimationE = Readonly<
