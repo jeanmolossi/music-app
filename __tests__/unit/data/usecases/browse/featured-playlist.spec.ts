@@ -5,6 +5,7 @@ import { HttpClientSpy } from "__tests__/mocks";
 
 const makeSut = (url = faker.internet.url()) => {
   const httpClientSpy = new HttpClientSpy<BrowseFeaturedPlaylists.Model>();
+
   const sut = new RemoteBrowseFeaturedPlaylist(url, httpClientSpy);
   return {
     sut,
@@ -17,6 +18,17 @@ describe("FeaturedPlaylist", () => {
     test("Espero que faça a chamada com os parâmetros corretos", async () => {
       const url = faker.internet.url();
       const { httpClientSpy, sut } = makeSut(url);
+
+      httpClientSpy.response = {
+        message: "Its featured playlists",
+        playlists: {
+          href: "link",
+          items: [],
+          limit: 10,
+          offset: 0,
+          total: 10,
+        },
+      };
 
       await sut.load();
 
