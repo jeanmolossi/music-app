@@ -1,73 +1,25 @@
+import { Image, Owner, ExternalUrls } from "@/domain/spotify";
+
+interface Item {
+  collaborative: boolean;
+  external_urls: ExternalUrls;
+  href: string;
+  id: string;
+  images: Image[];
+  name: string;
+  owner: Owner;
+  public: boolean;
+  snapshot_id: string;
+  tracks: {
+    href: string;
+    total: number;
+  };
+  type: string;
+  uri: string;
+}
 export interface MyPlaylists {
   href: string;
-  items: [
-    {
-      collaborative: boolean;
-      external_urls: {
-        spotify: string;
-      };
-      href: string;
-      id: string;
-      images: [
-        {
-          height: number;
-          url: string;
-          width: number;
-        }
-      ];
-      name: string;
-      owner: {
-        external_urls: {
-          spotify: string;
-        };
-        href: string;
-        id: string;
-        type: string;
-        uri: string;
-      };
-      public: boolean;
-      snapshot_id: string;
-      tracks: {
-        href: string;
-        total: number;
-      };
-      type: string;
-      uri: string;
-    },
-    {
-      collaborative: boolean;
-      external_urls: {
-        spotify: string;
-      };
-      href: string;
-      id: string;
-      images: [
-        {
-          height: number;
-          url: string;
-          width: number;
-        }
-      ];
-      name: string;
-      owner: {
-        external_urls: {
-          spotify: string;
-        };
-        href: string;
-        id: string;
-        type: string;
-        uri: string;
-      };
-      public: boolean;
-      snapshot_id: string;
-      tracks: {
-        href: string;
-        total: number;
-      };
-      type: string;
-      uri: string;
-    }
-  ];
+  items: Item[];
   limit: number;
   next?: string;
   offset: number;
