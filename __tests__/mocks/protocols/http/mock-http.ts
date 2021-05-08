@@ -26,7 +26,7 @@ export class HttpClientSpy<T = unknown> implements HttpClient<T> {
   ): Promise<T> {
     this.url = params.url;
     this.method = params.method;
-    this.header = params.headers;
+    this.header = params.headers || { Authorization: "token" };
     this.body = params.body;
     return (this.response as unknown) as T;
   }
