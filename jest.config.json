@@ -1,0 +1,8 @@
+{
+  "preset": "jest-expo",
+  "rootDir": ".",
+  "roots": ["<rootDir>/src/", "<rootDir>/__tests__/"],
+  "transformIgnorePatterns": ["node_modules/(?!(@?react-native)/)"],
+  "testPathIgnorePatterns": ["/node_modules/", "/mocks?/"],
+  "verbose": true
+}
