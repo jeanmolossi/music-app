@@ -1,5 +1,4 @@
 import { HttpClient } from "@/data/protocols/http/http-client";
-import { CurrentlyPlayingTrackUser } from "@/domain/spotify/currently-playing-track/currently-playing-track";
 import { GetCurrentlyPlayingTrack } from "@/domain/usecases";
 
 export class RemoteGetCurrentlyPlayingTrack
@@ -9,7 +8,7 @@ export class RemoteGetCurrentlyPlayingTrack
     private readonly httpClient: HttpClient<GetCurrentlyPlayingTrack.Model>
   ) {}
 
-  async get(): Promise<CurrentlyPlayingTrackUser> {
+  async get(): Promise<GetCurrentlyPlayingTrack.Model> {
     const body = new URLSearchParams({
       market: "BR",
     });

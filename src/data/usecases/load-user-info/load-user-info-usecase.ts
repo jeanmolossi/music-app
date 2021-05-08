@@ -1,5 +1,4 @@
 import { HttpClient } from "@/data/protocols/http/http-client";
-import { CurrentUserProfile } from "@/domain/models";
 import { LoadUserInfo } from "@/domain/usecases";
 
 export class RemoteLoadUserInfo implements LoadUserInfo {
@@ -8,7 +7,7 @@ export class RemoteLoadUserInfo implements LoadUserInfo {
     private readonly httpClient: HttpClient<LoadUserInfo.Model>
   ) {}
 
-  async load(): Promise<CurrentUserProfile> {
+  async load(): Promise<LoadUserInfo.Model> {
     const httpResponse = await this.httpClient.request({
       method: "GET",
       url: this.url,
