@@ -1,4 +1,4 @@
-import { GetCurrentlyPlayingTrack } from "@/domain/usecases";
+import { GetCurrentlyPlayingTrack, GetRecentlyPlayed } from "@/domain/usecases";
 import { ReactNode } from "react";
 
 export enum PlayerState {
@@ -14,6 +14,7 @@ export interface PlayerControlsContext {
   pauseMusic: () => void;
   onSeekComplete: (value: number) => void;
   togglePlayback: () => void;
+  updateMetadata: (metadatas: TrackMetadata) => void;
   playbackState: PlayerState;
   progressState: number;
   totalDuration: number;
@@ -21,10 +22,12 @@ export interface PlayerControlsContext {
     total: string;
     current: string;
   };
-  currentTrackMetadata?: GetCurrentlyPlayingTrack.Model;
+  currentTrackMetadata?: TrackMetadata;
 }
 
 export interface PlayerControlsProviderProps {
   children?: ReactNode;
   remoteGetCurrentlyPlaying: GetCurrentlyPlayingTrack;
 }
+
+export type TrackMetadata = GetRecentlyPlayed.Model["items"][0];

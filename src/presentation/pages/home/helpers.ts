@@ -4,6 +4,7 @@ import {
   GetRecentlyPlayed,
   LoadUserInfo,
 } from "@/domain/usecases";
+import { usePlayerContext } from "@/presentation/contexts";
 import { useCallback, useEffect, useState } from "react";
 import { HomeProps } from "./types";
 
@@ -12,7 +13,10 @@ export function useHomeHelpers({
   remoteLoadCurrentUserInfo,
   remoteGetMyPlaylists,
   remoteBrowseFeaturedPlaylists,
+  remoteRecentlyPlayed,
 }: HomeProps) {
+  const { updateMetadata } = usePlayerContext();
+
   const [code, setCode] = useState("");
 
   const [userInfo, setUserInfo] = useState<LoadUserInfo.Model>();
@@ -39,6 +43,12 @@ export function useHomeHelpers({
 
         remoteBrowseFeaturedPlaylists.load().then((remoteFeaturedPlaylists) => {
           setFeaturedPlaylists(remoteFeaturedPlaylists);
+        });
+
+        remoteRecentlyPlayed.load().then((remoteRecentPlayed) => {
+          if (remoteRecentPlayed.items.length > 0) {
+            updateMetadata(remoteRecentPlayed.items[0]);
+          }
         });
       });
     }

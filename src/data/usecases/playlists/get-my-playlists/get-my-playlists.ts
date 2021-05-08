@@ -1,5 +1,4 @@
 import { HttpClient } from "@/data/protocols/http/http-client";
-import { MyPlaylists } from "@/domain/spotify/my-playlists/my-playlists";
 import { GetMyPlaylists } from "@/domain/usecases";
 
 export class RemoteGetMyPlaylists implements GetMyPlaylists {
@@ -8,7 +7,7 @@ export class RemoteGetMyPlaylists implements GetMyPlaylists {
     private readonly httpClient: HttpClient<GetMyPlaylists.Model>
   ) {}
 
-  async load(): Promise<MyPlaylists> {
+  async load(): Promise<GetMyPlaylists.Model> {
     const httpResponse = await this.httpClient.request({
       method: "GET",
       url: this.url,

@@ -5,5 +5,5 @@ export interface GetCurrentlyPlayingTrack {
 }
 
 export namespace GetCurrentlyPlayingTrack {
-  export type Model = Spotify.CurrentlyPlayingTrack;
+  export type Model = Spotify.Player.CurrentlyPlaying;
 }

@@ -10,17 +10,14 @@ import {
   PlayerControlsContext,
   PlayerControlsProviderProps,
   PlayerState,
+  TrackMetadata,
 } from "./helpers";
-
-import { GetCurrentlyPlayingTrack } from "@/domain/usecases";
 
 const PlayerContext = createContext({} as PlayerControlsContext);
 
 export const MUSIC_PATH = "@/data/assets/Haikaiss_–_A_Praga.mp3";
 
 const playbackObject = new Audio.Sound();
-
-const playlist: any[] = [];
 
 export const PlayerControlsProvider = ({
   children,
@@ -29,7 +26,7 @@ export const PlayerControlsProvider = ({
   const [
     currentTrackMetadata,
     setCurrentTrackMetadata,
-  ] = useState<GetCurrentlyPlayingTrack.Model>();
+  ] = useState<TrackMetadata>();
   const [nextCheck, setNextCheck] = useState(-1);
   const [reload, setReload] = useState(true);
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
@@ -64,10 +61,6 @@ export const PlayerControlsProvider = ({
       if (status.didJustFinish) {
         playbackObject.unloadAsync().then(() => {
           setPlaybackState(PlayerState.STOPPED);
-          setCurrentTrackIndex((oldIndex) => {
-            if (playlist.length > oldIndex + 1) return oldIndex + 1;
-            return 0;
-          });
         });
       }
     },
@@ -116,6 +109,10 @@ export const PlayerControlsProvider = ({
     else playMusic();
   }, [playbackState]);
 
+  const updateMetadata = useCallback((metadatas: TrackMetadata) => {
+    setCurrentTrackMetadata(metadatas);
+  }, []);
+
   useEffect(() => {
     timerInMinutes();
   }, [timerInMinutes]);
@@ -123,13 +120,11 @@ export const PlayerControlsProvider = ({
   useEffect(() => {
     setPlaybackState(PlayerState.LOADING);
 
-    if (playlist[currentTrackIndex])
+    if (currentTrackMetadata?.track.preview_url)
       playbackObject
         .loadAsync(
-          playlist[currentTrackIndex].source,
-          {
-            progressUpdateIntervalMillis: 1000,
-          },
+          { uri: currentTrackMetadata?.track.preview_url },
+          { progressUpdateIntervalMillis: 1000 },
           true
         )
         .then((status) => {
@@ -146,7 +141,7 @@ export const PlayerControlsProvider = ({
             }
           }
         });
-  }, [currentTrackIndex, playlist]);
+  }, [currentTrackMetadata]);
 
   useEffect(() => {
     let CheckInterval: NodeJS.Timeout;
@@ -164,8 +159,6 @@ export const PlayerControlsProvider = ({
     if (reload) {
       console.log("RELOAD");
       remoteGetCurrentlyPlaying.get().then((response) => {
-        setCurrentTrackMetadata(response);
-
         if (response.is_playing) {
           const nextCheckCalc =
             (response.item?.duration_ms || 1) - response.progress_ms;
@@ -191,6 +184,7 @@ export const PlayerControlsProvider = ({
         onSeekComplete,
         currentTrackMetadata,
         togglePlayback,
+        updateMetadata,
       }}
     >
       {children}

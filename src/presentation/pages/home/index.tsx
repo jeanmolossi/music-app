@@ -48,9 +48,9 @@ export const Home = (props: HomeProps) => {
         />
       )}
 
-      {currentTrackMetadata?.item?.album.images[0].url && (
+      {currentTrackMetadata?.track.album.images[0].url && (
         <ImageBackground
-          source={{ uri: currentTrackMetadata.item.album.images[0].url }}
+          source={{ uri: currentTrackMetadata?.track.album.images[0].url }}
           style={styles.imageCover}
         >
           <Animated.View style={[textBoxAnimation, { width: "100%" }]}>
@@ -60,9 +60,9 @@ export const Home = (props: HomeProps) => {
               end={{ x: 0.5, y: 0 }}
             >
               <Animated.View style={[styles.track_info]}>
-                <Text style={styles.track_info_badge}>ARTISTA</Text>
+                <Text style={styles.track_info_badge}>MÚSICA</Text>
                 <Animated.Text style={[styles.track_info_music, textAnimation]}>
-                  {currentTrackMetadata?.item.artists[0].name || ""}
+                  {currentTrackMetadata?.track.name || ""}
                 </Animated.Text>
               </Animated.View>
             </LinearGradient>
