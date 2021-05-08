@@ -17,7 +17,7 @@ export interface Items {
 
 export interface RecentlyPlayed {
   items: Array<Items>;
-  next: string;
+  next?: string;
   cursors: {
     after: string;
     before: string;
