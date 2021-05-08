@@ -1,79 +1,22 @@
-export interface SpotifyAlbum {
+import { Artist, Album, Context, Track } from "@/domain/spotify";
+
+export interface SpotifyAlbum extends Album {
   album_type: string;
-  artists: [
-    {
-      external_urls: {
-        spotify: string;
-      };
-      href: string;
-      id: string;
-      name: string;
-      type: string;
-      uri: string;
-    }
-  ];
+  artists: Artist[];
   available_markets: string[];
-  external_urls: {
-    spotify: string;
-  };
-  href: string;
-  id: string;
-  images: [
-    {
-      height: number;
-      url: string;
-      width: number;
-    }
-  ];
-  name: string;
   release_date: string;
   release_date_precision: string;
   total_tracks: number;
-  type: string;
-  uri: string;
+}
+
+export interface Items {
+  track: Track<SpotifyAlbum>;
+  played_at: string;
+  context: Context;
 }
 
 export interface RecentlyPlayed {
-  items: Array<{
-    track: {
-      album: SpotifyAlbum;
-      artists: [
-        {
-          external_urls: {
-            spotify: string;
-          };
-          href: string;
-          id: string;
-          name: string;
-          type: string;
-          uri: string;
-        }
-      ];
-      available_markets: string[];
-      disc_number: number;
-      duration_ms: number;
-      explicit: boolean;
-      external_urls: {
-        spotify: string;
-      };
-      href: string;
-      id: string;
-      name: string;
-      preview_url: string;
-      track_number: number;
-      type: string;
-      uri: string;
-    };
-    played_at: string;
-    context: {
-      uri: string;
-      external_urls: {
-        spotify: string;
-      };
-      href: string;
-      type: string;
-    };
-  }>;
+  items: Array<Items>;
   next: string;
   cursors: {
     after: string;
