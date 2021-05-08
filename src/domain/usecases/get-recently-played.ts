@@ -5,5 +5,5 @@ export interface GetRecentlyPlayed {
 }
 
 export namespace GetRecentlyPlayed {
-  export type Model = Spotify.RecentlyPlayed;
+  export type Model = Spotify.Player.RecentlyPlayed;
 }

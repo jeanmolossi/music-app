@@ -5,5 +5,5 @@ export interface GetMyPlaylists {
 }
 
 export namespace GetMyPlaylists {
-  export type Model = Spotify.MyPlaylist;
+  export type Model = Spotify.Playlists.MyPlaylist;
 }
