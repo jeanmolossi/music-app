@@ -8,7 +8,11 @@ export const mockHttpRequest = (): HttpClient.Params<any> => ({
   headers: faker.random.objectElement(),
 });
 
-export class HttpClientSpy<T = unknown> implements HttpClient<T> {
+export type SpyMockType<T> = T extends { statusCode: number }
+  ? { statusCode: number }
+  : T;
+
+export class HttpClientSpy<T, R = SpyMockType<T>> implements HttpClient<R> {
   url?: string;
 
   method?: HttpClient.Method;
@@ -17,17 +21,16 @@ export class HttpClientSpy<T = unknown> implements HttpClient<T> {
 
   header?: any;
 
-  response = {
-    message: "ok",
-  };
+  response: R = {} as R;
 
   async request<BodyType = any>(
     params: HttpClient.Params<BodyType, any>
-  ): Promise<T> {
+  ): Promise<R> {
     this.url = params.url;
     this.method = params.method;
     this.header = params.headers || { Authorization: "token" };
     this.body = params.body;
-    return (this.response as unknown) as T;
+
+    return this.response;
   }
 }
