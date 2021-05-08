@@ -10,9 +10,8 @@ import {
   PlayerControlsContext,
   PlayerControlsProviderProps,
   PlayerState,
+  TrackMetadata,
 } from "./helpers";
-
-import { GetCurrentlyPlayingTrack } from "@/domain/usecases";
 
 const PlayerContext = createContext({} as PlayerControlsContext);
 
@@ -29,7 +28,7 @@ export const PlayerControlsProvider = ({
   const [
     currentTrackMetadata,
     setCurrentTrackMetadata,
-  ] = useState<GetCurrentlyPlayingTrack.Model>();
+  ] = useState<TrackMetadata>();
   const [nextCheck, setNextCheck] = useState(-1);
   const [reload, setReload] = useState(true);
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
@@ -116,6 +115,10 @@ export const PlayerControlsProvider = ({
     else playMusic();
   }, [playbackState]);
 
+  const updateMetadata = useCallback((metadatas: TrackMetadata) => {
+    setCurrentTrackMetadata(metadatas);
+  }, []);
+
   useEffect(() => {
     timerInMinutes();
   }, [timerInMinutes]);
@@ -164,8 +167,6 @@ export const PlayerControlsProvider = ({
     if (reload) {
       console.log("RELOAD");
       remoteGetCurrentlyPlaying.get().then((response) => {
-        setCurrentTrackMetadata(response);
-
         if (response.is_playing) {
           const nextCheckCalc =
             (response.item?.duration_ms || 1) - response.progress_ms;
@@ -191,6 +192,7 @@ export const PlayerControlsProvider = ({
         onSeekComplete,
         currentTrackMetadata,
         togglePlayback,
+        updateMetadata,
       }}
     >
       {children}
