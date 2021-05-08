@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Dimensions } from "react-native";
+import { Dimensions, BackHandler } from "react-native";
 import {
   useAnimatedGestureHandler,
   useAnimatedStyle,
@@ -55,6 +55,20 @@ export function usePlayerHelpers({ visibility, onClose }: PlayerProps) {
     } else {
       translationY.value = withSpring(END_POSITION, SPRING_CONFIG);
     }
+  }, [visibility]);
+
+  useEffect(() => {
+    const back = BackHandler.addEventListener("hardwareBackPress", function () {
+      if (visibility) {
+        onClose();
+      }
+
+      return visibility;
+    });
+
+    return () => {
+      back.remove();
+    };
   }, [visibility]);
 
   const animatedStyles = useAnimatedStyle(() => {

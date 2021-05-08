@@ -61,10 +61,10 @@ export const Player = (props: PlayerProps) => {
             </View>
 
             <View style={styles.cover}>
-              {currentTrackMetadata?.item && (
+              {currentTrackMetadata?.track.album.images[0].url && (
                 <Image
                   source={{
-                    uri: currentTrackMetadata.item.album.images[0].url,
+                    uri: currentTrackMetadata?.track.album.images[0].url,
                   }}
                   style={styles.cover_image}
                 />
@@ -77,10 +77,10 @@ export const Player = (props: PlayerProps) => {
           <View style={styles.infos_header}>
             <View style={styles.playing_track_info}>
               <Text size="xl" bold>
-                {currentTrackMetadata?.item?.name || "Musica"}
+                {currentTrackMetadata?.track?.name || "Musica"}
               </Text>
               <Text variant="suave">
-                {currentTrackMetadata?.item?.artists[0].name || "Artista"}
+                {currentTrackMetadata?.track?.artists[0].name || "Artista"}
               </Text>
             </View>
             <Pressable
