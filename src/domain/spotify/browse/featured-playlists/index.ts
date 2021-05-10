@@ -32,9 +32,9 @@ interface Playlists {
   href: string;
   items: Item[];
   limit: number;
-  next?: string;
+  next?: string | null;
   offset: number;
-  previous?: string;
+  previous?: string | null;
   total: number;
 }
 
