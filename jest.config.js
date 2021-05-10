@@ -6,11 +6,13 @@ module.exports = {
     "node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|@sentry/.*)",
   ],
   setupFiles: ["<rootDir>/src/main/config/jest-setup.ts"],
+  setupFilesAfterEnv: ["@testing-library/jest-native/extend-expect"],
   testPathIgnorePatterns: ["/node_modules/", "/mocks?/"],
   verbose: true,
   collectCoverageFrom: [
     "**/*.{ts,tsx}",
     "**/data/usecase(s)?/**/*.{ts,tsx})",
+    "!**/presentation/pages/**/*-animations.{ts,tsx}",
     "!**/data/protocols/**",
     "!**/node_modules/**",
     "!**/__tests__/**",
