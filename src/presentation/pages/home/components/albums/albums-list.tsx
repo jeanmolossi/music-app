@@ -22,6 +22,7 @@ export const AlbumsList = ({ data }: AlbumsListProps) => {
 
   return (
     <FlatList
+      testID="album-list-test-id"
       data={data?.items}
       showsVerticalScrollIndicator={false}
       style={styles.albums_flat_list}
@@ -34,6 +35,7 @@ export const AlbumsList = ({ data }: AlbumsListProps) => {
           onStartShouldSetResponderCapture={() => true}
           onMoveShouldSetResponderCapture={() => true}
           onMoveShouldSetResponder={() => true}
+          testID="list-item"
         >
           <Image
             style={styles.album_image}
@@ -46,6 +48,7 @@ export const AlbumsList = ({ data }: AlbumsListProps) => {
           <TouchableWithoutFeedback
             onPress={moreOption}
             style={styles.album_more_button}
+            testID="more-options-album"
           >
             <Feather name="more-horizontal" size={20} color={Theme.mainColor} />
           </TouchableWithoutFeedback>
