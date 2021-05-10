@@ -7,8 +7,6 @@ export const mockAsyncResponse = () =>
 export const mockAsyncStorage = () => {
   const mockedAsyncStorage = AsyncStorage as jest.Mocked<typeof AsyncStorage>;
 
-  console.log(AsyncStorage.getItem);
-
   mockedAsyncStorage.getItem
     .mockClear()
     .mockResolvedValueOnce(mockAsyncResponse());
