@@ -1,5 +1,5 @@
 import faker from "faker";
-import { makeBrowseFeaturedPlaylistsSut } from "__tests__/mocks/data/usecase/browse/featured-playlists/mock-featured-playlists";
+import { makeBrowseFeaturedPlaylistsSut } from "__tests__/mocks";
 
 describe("FeaturedPlaylist", () => {
   describe("load", () => {

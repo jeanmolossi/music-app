@@ -1,23 +1,11 @@
 import faker from "faker";
-import { RemoteGetRecentlyPlayed } from "@/data/usecases";
-import { GetRecentlyPlayed } from "@/domain/usecases";
-import { HttpClientSpy } from "__tests__/mocks";
-
-const makeSut = (url = faker.internet.url()) => {
-  const httpClientSpy = new HttpClientSpy<GetRecentlyPlayed.Model>();
-  const sut = new RemoteGetRecentlyPlayed(url, httpClientSpy);
-
-  return {
-    sut,
-    httpClientSpy,
-  };
-};
+import { makeRemoteGetRecentlyPlayedSut } from "__tests__/mocks";
 
 describe("GetRecentlyPlayed", () => {
   describe("load", () => {
     test("Espera-se que faça a chamada com os parâmetros corretos", async () => {
       const url = faker.internet.url();
-      const { sut, httpClientSpy } = makeSut(url);
+      const { sut, httpClientSpy } = makeRemoteGetRecentlyPlayedSut(url);
 
       httpClientSpy.response = {
         href: "valid-link",
@@ -48,7 +36,7 @@ describe("GetRecentlyPlayed", () => {
 
     test("Espera-se que faça a chamada com os parâmetros corretos e adicione um objeto de items como um vetor vazio", async () => {
       const url = faker.internet.url();
-      const { sut, httpClientSpy } = makeSut(url);
+      const { sut, httpClientSpy } = makeRemoteGetRecentlyPlayedSut(url);
 
       httpClientSpy.response = undefined as any;
 

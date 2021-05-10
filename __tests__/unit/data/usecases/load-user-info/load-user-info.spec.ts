@@ -1,23 +1,11 @@
 import faker from "faker";
-import { RemoteLoadUserInfo } from "@/data/usecases";
-import { LoadUserInfo } from "@/domain/usecases";
-import { HttpClientSpy } from "__tests__/mocks";
-
-const makeSut = (url = faker.internet.url()) => {
-  const httpClientSpy = new HttpClientSpy<LoadUserInfo.Model>();
-  const sut = new RemoteLoadUserInfo(url, httpClientSpy);
-
-  return {
-    sut,
-    httpClientSpy,
-  };
-};
+import { makeLoadUserInfoSut } from "__tests__/mocks";
 
 describe("LoadUserInfo", () => {
   describe("load", () => {
     test("Espera-se que faça a chamada com os parâmetros corretos", async () => {
       const url = faker.internet.url();
-      const { sut, httpClientSpy } = makeSut(url);
+      const { sut, httpClientSpy } = makeLoadUserInfoSut(url);
 
       await sut.load();
 
