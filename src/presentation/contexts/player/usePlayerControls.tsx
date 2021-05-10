@@ -67,10 +67,27 @@ export const PlayerControlsProvider = ({
     [currentTrackIndex]
   );
 
+  const loadPlayback = useCallback(
+    async (shouldPlay: boolean = false) => {
+      if (currentTrackMetadata)
+        return await playbackObject.loadAsync(
+          { uri: currentTrackMetadata.track.preview_url },
+          { progressUpdateIntervalMillis: 625, shouldPlay },
+          true
+        );
+    },
+    [currentTrackMetadata]
+  );
+
   const playMusic = useCallback(() => {
-    playbackObject.playAsync().then(() => {
-      setPlaybackState(PlayerState.PLAYING);
-    });
+    playbackObject
+      .playAsync()
+      .then(() => {
+        setPlaybackState(PlayerState.PLAYING);
+      })
+      .catch(() => {
+        loadPlayback(true);
+      });
   }, []);
 
   const pauseMusic = useCallback(() => {
@@ -120,28 +137,21 @@ export const PlayerControlsProvider = ({
   useEffect(() => {
     setPlaybackState(PlayerState.LOADING);
 
-    if (currentTrackMetadata?.track.preview_url)
-      playbackObject
-        .loadAsync(
-          { uri: currentTrackMetadata?.track.preview_url },
-          { progressUpdateIntervalMillis: 1000 },
-          true
-        )
-        .then((status) => {
-          if (status.isLoaded) {
-            playbackObject.setOnPlaybackStatusUpdate(onPlaybackStatusUpdate);
-            setTotalDuration(status.durationMillis || 0);
-            setProgressState(status.positionMillis);
+    loadPlayback().then((status) => {
+      if (status && status.isLoaded) {
+        playbackObject.setOnPlaybackStatusUpdate(onPlaybackStatusUpdate);
+        setTotalDuration(status.durationMillis || 0);
+        setProgressState(status.positionMillis);
 
-            if (currentTrackIndex > 0) {
-              setPlaybackState(PlayerState.PLAYING);
-              playMusic();
-            } else {
-              setPlaybackState(PlayerState.STOPPED);
-            }
-          }
-        });
-  }, [currentTrackMetadata]);
+        if (currentTrackIndex > 0) {
+          setPlaybackState(PlayerState.PLAYING);
+          playMusic();
+        } else {
+          setPlaybackState(PlayerState.STOPPED);
+        }
+      }
+    });
+  }, [loadPlayback]);
 
   useEffect(() => {
     let CheckInterval: NodeJS.Timeout;

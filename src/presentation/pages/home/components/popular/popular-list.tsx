@@ -15,6 +15,7 @@ type ItemT = BrowseFeaturedPlaylists.Model["playlists"]["items"][0];
 export const PopularList = ({ data }: PopularListProps) => {
   return (
     <FlatList
+      testID="popular-list-test-id"
       data={data?.playlists?.items}
       style={styles.flatlist_style}
       contentContainerStyle={styles.flatlist_content_style}
