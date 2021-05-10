@@ -71,7 +71,10 @@ export const Home = (props: HomeProps) => {
       )}
 
       <PanGestureHandler onGestureEvent={onGestureEvent}>
-        <Animated.View style={[styles.more_content, animatedStyle]}>
+        <Animated.View
+          style={[styles.more_content, animatedStyle]}
+          testID="animated-content-view"
+        >
           <Pressable style={styles.play_button} onPress={onOpen}>
             <LinearGradient
               style={[
