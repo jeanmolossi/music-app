@@ -17,6 +17,7 @@ export interface PlayerControlsContext {
   onSeekComplete: (value: number) => void;
   togglePlayback: () => void;
   updateMetadata: (metadatas: TrackMetadata) => void;
+  loadPlaylist: (playlist_url: string) => void;
   playbackState: PlayerState;
   progressState: number;
   totalDuration: number;
