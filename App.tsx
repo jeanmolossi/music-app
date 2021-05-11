@@ -13,12 +13,17 @@ import {
 import { MainRoutes } from "./src/main/routes";
 import { Theme } from "./src/presentation/styles";
 
+import "@/infra/notifications/notifications-setup";
+import { useNotificationsHandler } from "@/infra/notifications/notifications-handler";
+
 export default function App() {
   let [fontsLoaded] = useFonts({
     Poppins_Regular: Poppins_400Regular,
     Poppins_Medium: Poppins_500Medium,
     Poppins_Bold: Poppins_700Bold,
   });
+
+  useNotificationsHandler();
 
   return (
     <SafeAreaProvider>
