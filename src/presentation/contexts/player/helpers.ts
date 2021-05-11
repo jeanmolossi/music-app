@@ -15,7 +15,7 @@ import {
 
 const playbackObject = new Audio.Sound();
 
-export function usePlayerContextHelper(_props: PlayerControlsProviderProps) {
+export function usePlayerContextHelper(props: PlayerControlsProviderProps) {
   const [state, dispatch] = useReducer(playerReducer, initialState);
 
   const { playbackState, progressState, totalDuration, currentPlaying } = state;
@@ -60,7 +60,7 @@ export function usePlayerContextHelper(_props: PlayerControlsProviderProps) {
     if (status.isPlaying) dispatch(setPlaybackState(PlayerState.PLAYING));
 
     if (status.positionMillis > 0) {
-      setProgressState(status.positionMillis);
+      dispatch(setProgressState(status.positionMillis));
     }
 
     if (status.didJustFinish) {
@@ -91,7 +91,7 @@ export function usePlayerContextHelper(_props: PlayerControlsProviderProps) {
       .catch(() => {
         loadPlayback(true);
       });
-  }, []);
+  }, [loadPlayback]);
 
   const pauseMusic = useCallback(() => {
     playbackObject.pauseAsync().then(() => {
