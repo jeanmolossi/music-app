@@ -6,13 +6,17 @@ import {
   makeRemoteGetRecentlyPlayed,
   makeRemoteLoadCurrentUserInfo,
 } from "@/main/factories/usecases";
-import { setSpotifyAuthorizationCodeAdapter } from "@/main/adapters";
+import {
+  getRefreshTokenAdapter,
+  setSpotifyAuthorizationCodeAdapter,
+} from "@/main/adapters";
 
 interface HomePageFactoryProps {}
 
 export const HomePageFactory = ({}: HomePageFactoryProps) => {
-  const remoteLoadCurrentUserInfo = makeRemoteLoadCurrentUserInfo();
   const setSpotifyAuthorizationCode = setSpotifyAuthorizationCodeAdapter;
+  const getRefreshToken = getRefreshTokenAdapter;
+  const remoteLoadCurrentUserInfo = makeRemoteLoadCurrentUserInfo();
   const remoteGetMyPlaylists = makeRemoteGetMyPlaylists();
   const remoteBrowseFeaturedPlaylists = makeRemoteBrowseFeaturedPlaylists();
   const remoteRecentlyPlayed = makeRemoteGetRecentlyPlayed();
@@ -20,8 +24,9 @@ export const HomePageFactory = ({}: HomePageFactoryProps) => {
   return (
     <Home
       {...{
-        remoteLoadCurrentUserInfo,
         setSpotifyAuthorizationCode,
+        getRefreshToken,
+        remoteLoadCurrentUserInfo,
         remoteGetMyPlaylists,
         remoteBrowseFeaturedPlaylists,
         remoteRecentlyPlayed,
