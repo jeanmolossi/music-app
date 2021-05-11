@@ -8,5 +8,5 @@ export interface RefRequestProviderProps {
 }
 
 export interface RefRequestContextData {
-  makeRequest: (ref_url: string) => Promise<any>;
+  makeRequest: <T = any>(ref_url: string) => Promise<T>;
 }
