@@ -11,6 +11,7 @@ import {
 
 export interface HomeProps {
   setSpotifyAuthorizationCode: (auth_code: string) => Promise<void>;
+  getRefreshToken: () => Promise<string | null>;
   remoteLoadCurrentUserInfo: LoadUserInfo;
   remoteGetMyPlaylists: GetMyPlaylists;
   remoteBrowseFeaturedPlaylists: BrowseFeaturedPlaylists;

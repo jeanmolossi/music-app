@@ -10,6 +10,7 @@ import { HomeProps } from "./types";
 
 export function useHomeHelpers({
   setSpotifyAuthorizationCode,
+  getRefreshToken,
   remoteLoadCurrentUserInfo,
   remoteGetMyPlaylists,
   remoteBrowseFeaturedPlaylists,
@@ -18,6 +19,7 @@ export function useHomeHelpers({
   const { updateMetadata } = usePlayerContext();
 
   const [code, setCode] = useState("");
+  const [refreshToken, setRefreshToken] = useState("");
 
   const [userInfo, setUserInfo] = useState<LoadUserInfo.Model>();
   const [playlists, setPlaylists] = useState<GetMyPlaylists.Model>();
@@ -33,7 +35,13 @@ export function useHomeHelpers({
   }, []);
 
   useEffect(() => {
-    if (code) {
+    getRefreshToken().then((token) => {
+      if (token) setRefreshToken(token);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (code || refreshToken) {
       remoteLoadCurrentUserInfo.load().then((response) => {
         setUserInfo(response);
 
@@ -52,10 +60,11 @@ export function useHomeHelpers({
         });
       });
     }
-  }, [code]);
+  }, [code, refreshToken]);
 
   return {
     code,
+    refreshToken,
     onNavigationStateChange,
     userInfo,
     playlists,
