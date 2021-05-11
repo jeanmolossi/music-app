@@ -16,10 +16,10 @@ export class SpotifyAuthorizeHttpClientDecorator<T = unknown>
   ): Promise<T> {
     let Authorization: string;
 
-    const get_token = await this.storageAdapter.get<string>("access_token");
-    const get_refresh_token = await this.storageAdapter.get<string>(
-      "refresh_token"
-    );
+    const [get_token, get_refresh_token] = await Promise.all([
+      this.storageAdapter.get<string>("access_token"),
+      this.storageAdapter.get<string>("refresh_token"),
+    ]);
 
     let refresh_token: string = get_refresh_token || "";
 
@@ -77,6 +77,7 @@ export class SpotifyAuthorizeHttpClientDecorator<T = unknown>
 
       return httpResponse;
     } catch (error) {
+      await this.storageAdapter.set("authorization_code", undefined);
       throw new Error(error.message);
     }
   }
