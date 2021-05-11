@@ -1,7 +1,9 @@
+import { Spotify } from "@/domain/spotify";
 import { PlayerState, TrackMetadata } from "../types";
 import {
   UpdateCurrentPlaying,
   UpdatePlaybackStateAction,
+  UpdatePlaylist,
   UpdateProgressState,
   UpdateTimersAction,
   UpdateTotalDuration,
@@ -51,6 +53,17 @@ export function setCurrentPlaying(
     type: "@player/update-metadatas",
     payload: {
       currentPlaying,
+    },
+  };
+}
+
+export function setPlaylist(
+  playlist: Spotify.Playlists.SinglePlaylist
+): UpdatePlaylist {
+  return {
+    type: "@player/update-playlist",
+    payload: {
+      playlist,
     },
   };
 }

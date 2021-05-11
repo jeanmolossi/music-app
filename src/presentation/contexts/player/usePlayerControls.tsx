@@ -5,19 +5,9 @@ import React, {
   useEffect,
   useState,
 } from "react";
-import { AVPlaybackStatus } from "expo-av";
-import {
-  PlayerControlsContext,
-  PlayerControlsProviderProps,
-  PlayerState,
-  TrackMetadata,
-} from "./types";
+
+import { PlayerControlsContext, PlayerControlsProviderProps } from "./types";
 import { usePlayerContextHelper } from "./helpers";
-import {
-  setPlaybackState,
-  setProgressState,
-  setTotalDuration,
-} from "./state_management/actions";
 
 const PlayerContext = createContext({} as PlayerControlsContext);
 
@@ -33,6 +23,7 @@ export const PlayerControlsProvider = (props: PlayerControlsProviderProps) => {
     playMusic,
     togglePlayback,
     updateMetadata,
+    loadPlaylist,
   } = usePlayerContextHelper(props);
 
   const {
@@ -56,6 +47,7 @@ export const PlayerControlsProvider = (props: PlayerControlsProviderProps) => {
         currentPlaying,
         togglePlayback,
         updateMetadata,
+        loadPlaylist,
       }}
     >
       {children}

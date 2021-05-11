@@ -1,4 +1,5 @@
 import { BrowseFeaturedPlaylists } from "@/domain/usecases";
+import { usePlayerContext } from "@/presentation/contexts";
 import { FontAwesome5 } from "@expo/vector-icons";
 import React from "react";
 import { Image, Pressable, View } from "react-native";
@@ -13,6 +14,8 @@ interface PopularListProps {
 type ItemT = BrowseFeaturedPlaylists.Model["playlists"]["items"][0];
 
 export const PopularList = ({ data }: PopularListProps) => {
+  const { loadPlaylist } = usePlayerContext();
+
   return (
     <FlatList
       testID="popular-list-test-id"
@@ -38,7 +41,10 @@ export const PopularList = ({ data }: PopularListProps) => {
 
           <Text>{item.name}</Text>
 
-          <Pressable style={styles.popular_item_play}>
+          <Pressable
+            onPress={() => loadPlaylist(item.href)}
+            style={styles.popular_item_play}
+          >
             <FontAwesome5 name="play" size={10} color="white" />
           </Pressable>
         </View>

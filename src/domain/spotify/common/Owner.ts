@@ -1,3 +1,5 @@
+import { ExternalUrls } from "./ExternalUrl";
+
 export interface Owner {
   external_urls: ExternalUrls;
   href: string;

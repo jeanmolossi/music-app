@@ -11,8 +11,8 @@ export const GlobalContextFactoryProvider = ({
   children,
 }: GlobalContextFactoryProviderProps) => {
   return (
-    <PlayerProviderFactory>
-      <RefRequestContextFactory>{children}</RefRequestContextFactory>
-    </PlayerProviderFactory>
+    <RefRequestContextFactory>
+      <PlayerProviderFactory>{children}</PlayerProviderFactory>
+    </RefRequestContextFactory>
   );
 };

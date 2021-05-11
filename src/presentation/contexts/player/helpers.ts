@@ -1,8 +1,11 @@
+import { Spotify } from "@/domain/spotify";
 import { Audio, AVPlaybackStatus } from "expo-av";
 import { useCallback, useEffect, useReducer } from "react";
+import { useRefRequest } from "../ref_request/useRefRequest";
 import {
   setCurrentPlaying,
   setPlaybackState,
+  setPlaylist,
   setProgressState,
   setTotalDuration,
 } from "./state_management/actions";
@@ -15,10 +18,18 @@ import {
 
 const playbackObject = new Audio.Sound();
 
-export function usePlayerContextHelper(props: PlayerControlsProviderProps) {
+export function usePlayerContextHelper(_props: PlayerControlsProviderProps) {
+  const { makeRequest } = useRefRequest();
+
   const [state, dispatch] = useReducer(playerReducer, initialState);
 
-  const { playbackState, progressState, totalDuration, currentPlaying } = state;
+  const {
+    playbackState,
+    progressState,
+    totalDuration,
+    currentPlaying,
+    playlist,
+  } = state;
 
   const timerInMinutes = useCallback(() => {
     const durationInMinutes = Math.floor(totalDuration / 1000 / 60);
@@ -112,6 +123,14 @@ export function usePlayerContextHelper(props: PlayerControlsProviderProps) {
     dispatch(setCurrentPlaying(metadatas));
   }, []);
 
+  const loadPlaylist = useCallback((playlist_url: string) => {
+    makeRequest<Spotify.Playlists.SinglePlaylist>(playlist_url).then(
+      (featured_playlist) => {
+        dispatch(setPlaylist(featured_playlist));
+      }
+    );
+  }, []);
+
   useEffect(() => {
     timerInMinutes();
   }, [timerInMinutes]);
@@ -142,5 +161,7 @@ export function usePlayerContextHelper(props: PlayerControlsProviderProps) {
     onSeekComplete,
     togglePlayback,
     updateMetadata,
+    playlist,
+    loadPlaylist,
   };
 }
