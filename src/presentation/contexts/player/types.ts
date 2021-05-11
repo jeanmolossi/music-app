@@ -5,8 +5,10 @@ export enum PlayerState {
   BUFFERING = "buffering",
   PLAYING = "playing",
   LOADING = "loading",
+  LOADED = "loaded",
   PAUSED = "paused",
   STOPPED = "stopped",
+  FINISHED = "finished",
 }
 
 export interface PlayerControlsContext {
