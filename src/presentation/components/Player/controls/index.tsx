@@ -2,7 +2,8 @@ import React from "react";
 import { Feather, FontAwesome5 } from "@expo/vector-icons";
 import { Pressable, View } from "react-native";
 import { Theme } from "@/presentation/styles";
-import { usePlayerContext, PlayerState } from "@/presentation/contexts";
+import { usePlayerContext } from "@/presentation/contexts";
+import { PlayerState } from "@/presentation/contexts/player/types";
 import styles from "../styles";
 
 interface ControlsProps {}
