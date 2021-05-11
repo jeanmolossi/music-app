@@ -5,12 +5,12 @@ import { Alert, Image, Pressable, View } from "react-native";
 import { PanGestureHandler, ScrollView } from "react-native-gesture-handler";
 import Animated from "react-native-reanimated";
 import { Theme } from "@/presentation/styles";
-import { Text } from "@/presentation/components";
+import { Text } from "@/presentation/components/Text";
 import { usePlayerContext } from "@/presentation/contexts";
 import { Controls } from "./controls";
+import { Progress } from "./progress";
 import { usePlayerHelpers } from "./helpers";
 import styles from "./styles";
-import { Progress } from "./progress";
 
 export interface PlayerProps {
   visibility: boolean;
@@ -21,7 +21,7 @@ export interface PlayerProps {
 export const Player = (props: PlayerProps) => {
   const { onClose } = props;
   const { onGestureEvent, animatedStyles } = usePlayerHelpers(props);
-  const { currentTrackMetadata } = usePlayerContext();
+  const { currentPlaying } = usePlayerContext();
 
   return (
     <Animated.View style={animatedStyles}>
@@ -61,10 +61,10 @@ export const Player = (props: PlayerProps) => {
             </View>
 
             <View style={styles.cover}>
-              {currentTrackMetadata?.track.album.images[0].url && (
+              {currentPlaying?.track.album.images[0].url && (
                 <Image
                   source={{
-                    uri: currentTrackMetadata?.track.album.images[0].url,
+                    uri: currentPlaying?.track.album.images[0].url,
                   }}
                   style={styles.cover_image}
                 />
@@ -77,10 +77,10 @@ export const Player = (props: PlayerProps) => {
           <View style={styles.infos_header}>
             <View style={styles.playing_track_info}>
               <Text size="xl" bold>
-                {currentTrackMetadata?.track?.name || "Musica"}
+                {currentPlaying?.track?.name || "Musica"}
               </Text>
               <Text variant="suave">
-                {currentTrackMetadata?.track?.artists[0].name || "Artista"}
+                {currentPlaying?.track?.artists[0].name || "Artista"}
               </Text>
             </View>
             <Pressable
