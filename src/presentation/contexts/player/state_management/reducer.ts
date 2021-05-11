@@ -1,8 +1,9 @@
-import { PlayerState, TrackMetadata } from "../types";
+import { PlayerState } from "../types";
 import { PlayerActions, PlayerStates } from "./types";
 
 export const initialState: PlayerStates = {
   currentPlaying: undefined,
+  playlist: undefined,
   playbackState: PlayerState.LOADING,
   progressState: 0,
   totalDuration: 0,
@@ -62,6 +63,15 @@ export function playerReducer(
       return {
         ...state,
         totalDuration,
+      };
+    }
+
+    case "@player/update-playlist": {
+      const { playlist } = action.payload;
+
+      return {
+        ...state,
+        playlist,
       };
     }
 

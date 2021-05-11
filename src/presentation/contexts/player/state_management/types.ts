@@ -1,3 +1,4 @@
+import { Spotify } from "@/domain/spotify";
 import { PlayerState, TrackMetadata } from "../types";
 
 export type ActionModel<T, PayloadType> = {
@@ -33,8 +34,14 @@ export type UpdateCurrentPlaying = ActionModel<
   { currentPlaying: TrackMetadata }
 >;
 
+export type UpdatePlaylist = ActionModel<
+  "@player/update-playlist",
+  { playlist: Spotify.Playlists.SinglePlaylist }
+>;
+
 export type PlayerStates = {
   currentPlaying?: TrackMetadata;
+  playlist?: Spotify.Playlists.SinglePlaylist;
   playbackState: PlayerState;
   progressState: number;
   totalDuration: number;
@@ -49,4 +56,5 @@ export type PlayerActions =
   | UpdatePlaybackStateAction
   | UpdateTotalDuration
   | UpdateProgressState
-  | UpdateCurrentPlaying;
+  | UpdateCurrentPlaying
+  | UpdatePlaylist;
