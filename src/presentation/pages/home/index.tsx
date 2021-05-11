@@ -10,7 +10,8 @@ import {
   usePlayer,
   AuthorizeSpotifyModal,
 } from "@/presentation/components";
-import { usePlayerContext, PlayerState } from "@/presentation/contexts";
+import { usePlayerContext } from "@/presentation/contexts";
+import { PlayerState } from "@/presentation/contexts/player/types";
 import { Theme } from "@/presentation/styles";
 import { PopularList, AlbumsList, SocialsInfo } from "./components";
 import { useHomeHelpers } from "./helpers";
@@ -29,28 +30,29 @@ export const Home = (props: HomeProps) => {
   const {
     onNavigationStateChange,
     code,
+    refreshToken,
     userInfo,
     playlists,
     featuredPlaylists,
   } = useHomeHelpers(props);
 
   const { onClose, visibility, onOpen } = usePlayer();
-  const { playbackState, currentTrackMetadata } = usePlayerContext();
+  const { playbackState, currentPlaying } = usePlayerContext();
 
   return (
     <View style={styles.container}>
       <Player {...{ onClose, visibility, onOpen }} />
 
-      {!code && (
+      {!code && !refreshToken && (
         <AuthorizeSpotifyModal
           visible={!code}
           onNavigationStateChange={onNavigationStateChange}
         />
       )}
 
-      {currentTrackMetadata?.track.album.images[0].url && (
+      {currentPlaying?.track.album.images[0].url && (
         <ImageBackground
-          source={{ uri: currentTrackMetadata?.track.album.images[0].url }}
+          source={{ uri: currentPlaying?.track.album.images[0].url }}
           style={styles.imageCover}
         >
           <Animated.View style={[textBoxAnimation, { width: "100%" }]}>
@@ -62,7 +64,7 @@ export const Home = (props: HomeProps) => {
               <Animated.View style={[styles.track_info]}>
                 <Text style={styles.track_info_badge}>MÚSICA</Text>
                 <Animated.Text style={[styles.track_info_music, textAnimation]}>
-                  {currentTrackMetadata?.track.name || ""}
+                  {currentPlaying?.track.name || ""}
                 </Animated.Text>
               </Animated.View>
             </LinearGradient>
